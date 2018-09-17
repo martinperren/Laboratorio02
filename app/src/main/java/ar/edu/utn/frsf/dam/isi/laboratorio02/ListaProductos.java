@@ -3,6 +3,8 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -21,7 +23,7 @@ public class ListaProductos extends AppCompatActivity {
     private ArrayAdapter<Categoria> adapterCategoria;
     private ProductoRepository product = new ProductoRepository();
     private ArrayAdapter<Producto> adapterProductos;
-    private TextView tvPelicula;
+    private TextView tvProducto;
     private ListView listaProductos;
 
     @Override
@@ -36,11 +38,40 @@ public class ListaProductos extends AppCompatActivity {
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
         listaProductos = findViewById(R.id.listaProductos);
-        tvPelicula = findViewById(R.id.productos);
+        tvProducto = findViewById(R.id.productos);
         adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
+        //adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.buscarPorCategoria(product.getCategorias().get(1)));
         listaProductos.setAdapter(adapterProductos);
 
+        spinner.setOnItemSelectedListener(
 
+            new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                List<Categoria> lista = product.getCategorias();
+                for(int j=0;j<lista.size();j++){
+                    if((lista.get(j).toString()).equals(adapterView.getItemAtPosition(i).toString())){
+                        adapterProductos.clear();
+                        adapterProductos.addAll(product.buscarPorCategoria(lista.get(j)));
+                        adapterProductos.notifyDataSetChanged();
+                    }
+                }
+                //adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.buscarPorCategoria());
+                //listaProductos.setAdapter(adapterProductos);
+                //tvGenero.setText("Seleccionado: "+adapterView.getItemAtPosition(i).toString());
+                }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+
+        listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Producto producto = (Producto) adapterView.getItemAtPosition(i);
+            }
+        });
 
     }
 
