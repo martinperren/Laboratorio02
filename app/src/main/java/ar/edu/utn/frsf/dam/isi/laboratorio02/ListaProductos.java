@@ -43,28 +43,16 @@ public class ListaProductos extends AppCompatActivity {
         //adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.buscarPorCategoria(product.getCategorias().get(1)));
         listaProductos.setAdapter(adapterProductos);
 
-        spinner.setOnItemSelectedListener(
-
-            new AdapterView.OnItemSelectedListener() {
-
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                List<Categoria> lista = product.getCategorias();
-                for(int j=0;j<lista.size();j++){
-                    if((lista.get(j).toString()).equals(adapterView.getItemAtPosition(i).toString())){
-                        adapterProductos.clear();
-                        adapterProductos.addAll(product.buscarPorCategoria(lista.get(j)));
-                        adapterProductos.notifyDataSetChanged();
-                    }
-                }
-                //adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.buscarPorCategoria());
-                //listaProductos.setAdapter(adapterProductos);
-                //tvGenero.setText("Seleccionado: "+adapterView.getItemAtPosition(i).toString());
-                }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Categoria cat = (Categoria) parent.getItemAtPosition(position);
+                adapterProductos = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, product.buscarPorCategoria(cat));
+                listaProductos.setAdapter(adapterProductos);
+            }
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-            });
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
 
         listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
