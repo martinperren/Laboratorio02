@@ -31,6 +31,24 @@
             android:layout_height="wrap_content"
             android:choiceMode="singleChoice"
             android:layout_weight="1"></ListView>
+
+        <TextView
+            android:text="Cantidad a pedir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edtCantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+        <Button
+            android:id="@+id/btnAceptar"
+            android:text="AGREGAR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
