@@ -48,7 +48,7 @@ public class ListaProductos extends AppCompatActivity {
         tvProducto = findViewById(R.id.productos);
         adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
         listaProductos.setAdapter(adapterProductos);
-     this.aceptar.setOnClickListener(listenerBtnAceptar);
+        this.aceptar.setOnClickListener(listenerBtnAceptar);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -75,7 +75,6 @@ public class ListaProductos extends AppCompatActivity {
     private View.OnClickListener listenerBtnAceptar = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            listaProductos.getSelectedItem();
             Intent intentResultado = new Intent();
             intentResultado.putExtra("cantidad",edtCantidad.getText().toString());
             Log.d("TEST","Eleccion: "+producto);

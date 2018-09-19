@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,8 +35,9 @@ public class AltaPedidos extends AppCompatActivity {
     private Button btnQuitarProducto;
     private Button btnHacerPedido;
     private Button btnVolver;
-    private static final int CODIGO_ACTIVIDAD = 1;
+    private static final int CODIGO_ACTIVIDAD1 = 1;
     private List<Producto> listaProducto= new ArrayList<>();
+    private Producto producto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,24 @@ public class AltaPedidos extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AltaPedidos.this,ListaProductos.class);
-                startActivityForResult(i, CODIGO_ACTIVIDAD);
+                startActivityForResult(i, CODIGO_ACTIVIDAD1);
+            }
+        });
+
+        listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                producto = (Producto) adapterView.getItemAtPosition(i);
+            }
+        });
+
+        btnQuitarProducto =  findViewById(R.id.btnQuitarProducto);
+        btnQuitarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listaProducto.remove(producto);
+                adapterProductos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaProducto);
+                listaProductos.setAdapter(adapterProductos);
             }
         });
 
@@ -70,7 +89,11 @@ public class AltaPedidos extends AppCompatActivity {
 
             }
         });
+
+
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode,
