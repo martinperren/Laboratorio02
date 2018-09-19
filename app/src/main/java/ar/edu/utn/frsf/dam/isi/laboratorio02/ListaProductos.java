@@ -48,10 +48,7 @@ public class ListaProductos extends AppCompatActivity {
         tvProducto = findViewById(R.id.productos);
         adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
         listaProductos.setAdapter(adapterProductos);
-       this.aceptar.setOnClickListener(listenerBtnAceptar);
-
-
-
+        this.aceptar.setOnClickListener(listenerBtnAceptar);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -64,18 +61,13 @@ public class ListaProductos extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-
         listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                  producto = (Producto) adapterView.getItemAtPosition(i);
             }
         });
-
-
-
     }
-
 
     private View.OnClickListener listenerBtnAceptar = new View.OnClickListener() {
         @Override
@@ -84,14 +76,9 @@ public class ListaProductos extends AppCompatActivity {
             Intent intentResultado = new Intent();
             intentResultado.putExtra("cantidad",Integer.valueOf(edtCantidad.getText().toString()));
             Log.d("TEST","Eleccion: "+producto);
-            intentResultado.putExtra("producto",producto.toString());
+            intentResultado.putExtra("producto",producto.getId());
             setResult(Activity.RESULT_OK,intentResultado);
             finish();
         }
     };
-
-
-
-
-
 }

@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class AltaPedidos extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class AltaPedidos extends AppCompatActivity {
     private Button btnQuitarProducto;
     private Button btnHacerPedido;
     private Button btnVolver;
+    private static final int CODIGO_ACTIVIDAD = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class AltaPedidos extends AppCompatActivity {
         optDomicilio= (RadioButton) findViewById(R.id.optDomicilio);
         listaProductos = findViewById(R.id.listaProductos);
         adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
+        adapterProductos.clear();
         listaProductos.setAdapter(adapterProductos);
 
         btnAgregarProducto =  findViewById(R.id.btnAgregarProducto);
@@ -50,8 +53,7 @@ public class AltaPedidos extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AltaPedidos.this,ListaProductos.class);
-                startActivity(i);
-
+                startActivityForResult(i, CODIGO_ACTIVIDAD);
             }
         });
 
@@ -61,11 +63,23 @@ public class AltaPedidos extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(AltaPedidos.this,MainActivity.class);
                 startActivity(i);
+
             }
         });
-
-
     }
 
-    }
+    @Override
+    public void onActivityResult(int requestCode,
+                                 int resultCode,
+                                 Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+                if (resultCode == Activity.RESULT_OK) {
+                    Integer cantidad = data.getIntExtra("cantidad",0);
+                    Integer id = data.getIntExtra("producto",0);
+                    adapterProductos.add(product.buscarPorId(id));
+                    listaProductos.setAdapter(adapterProductos);
+                }
+        }
+}
 
