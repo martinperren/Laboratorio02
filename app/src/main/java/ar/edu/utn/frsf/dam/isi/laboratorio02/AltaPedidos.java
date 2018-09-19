@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
@@ -32,6 +35,7 @@ public class AltaPedidos extends AppCompatActivity {
     private Button btnHacerPedido;
     private Button btnVolver;
     private static final int CODIGO_ACTIVIDAD = 1;
+    private List<Producto> listaProducto= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +48,9 @@ public class AltaPedidos extends AppCompatActivity {
         optLocal= (RadioButton) findViewById(R.id.optLocal);
         optDomicilio= (RadioButton) findViewById(R.id.optDomicilio);
         listaProductos = findViewById(R.id.listaProductos);
-        adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
-        adapterProductos.clear();
+        adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice);
         listaProductos.setAdapter(adapterProductos);
+
 
         btnAgregarProducto =  findViewById(R.id.btnAgregarProducto);
         btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
@@ -75,9 +79,12 @@ public class AltaPedidos extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
                 if (resultCode == Activity.RESULT_OK) {
-                    Integer cantidad = data.getIntExtra("cantidad",0);
-                    Integer id = data.getIntExtra("producto",0);
-                    adapterProductos.add(product.buscarPorId(id));
+                    String cantidadst = data.getStringExtra("cantidad");
+                    String idst = data.getStringExtra("producto");
+                    Integer id = Integer.parseInt(idst);
+                    Integer cantidad = Integer.parseInt(cantidadst);
+                    listaProducto.add(product.buscarPorId(id));
+                    adapterProductos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaProducto);
                     listaProductos.setAdapter(adapterProductos);
                 }
         }

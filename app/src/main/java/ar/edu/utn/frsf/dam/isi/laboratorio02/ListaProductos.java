@@ -77,7 +77,7 @@ public class ListaProductos extends AppCompatActivity {
         public void onClick(View view) {
             listaProductos.getSelectedItem();
             Intent intentResultado = new Intent();
-            intentResultado.putExtra("cantidad",Integer.valueOf(edtCantidad.getText().toString()));
+            intentResultado.putExtra("cantidad",edtCantidad.getText().toString());
             Log.d("TEST","Eleccion: "+producto);
             intentResultado.putExtra("producto",(String) producto.getId().toString());
             setResult(Activity.RESULT_OK,intentResultado);
