@@ -101,15 +101,14 @@ public class AltaPedidos extends AppCompatActivity {
                                  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-                if (resultCode == Activity.RESULT_OK) {
-                    String cantidadst = data.getStringExtra("cantidad");
-                    String idst = data.getStringExtra("producto");
-                    Integer id = Integer.parseInt(idst);
-                    Integer cantidad = Integer.parseInt(cantidadst);
-                    listaProducto.add(product.buscarPorId(id));
-                    adapterProductos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaProducto);
-                    listaProductos.setAdapter(adapterProductos);
-                }
+        if (resultCode == Activity.RESULT_OK) {
+            String cantidadst = data.getStringExtra("cantidad");
+            String idst = data.getStringExtra("producto");
+            Integer id = Integer.parseInt(idst);
+            Integer cantidad = Integer.parseInt(cantidadst);
+            listaProducto.add(product.buscarPorId(id));
+            adapterProductos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaProducto);
+            listaProductos.setAdapter(adapterProductos);
         }
+    }
 }
-

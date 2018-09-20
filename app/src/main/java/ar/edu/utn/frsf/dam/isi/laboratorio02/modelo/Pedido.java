@@ -54,6 +54,15 @@ public class Pedido {
         this.retirar = retirar;
     }
 
+//PARA TEST, BORRAR
+    public Pedido(String direccionEnvio, String mailContacto,boolean retirar) {
+        this();
+        this.direccionEnvio = direccionEnvio;
+        this.mailContacto = mailContacto;
+        this.retirar = retirar;
+    }
+
+
     public Pedido(Date fecha, Estado estado) {
         this();
         this.fecha = fecha;
