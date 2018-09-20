@@ -17,7 +17,7 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
     private Context mContext;
     private List<Pedido> listaPedidos = new ArrayList<>();
 
-    public PedidosAdapter(Context context, ArrayList<Pedido> list) {
+    public PedidosAdapter(Context context, List<Pedido> list) {
         super(context, 0 , list);
         mContext = context;
         listaPedidos = list;
@@ -46,10 +46,11 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
         }else{
             iwestado.setImageResource(android.R.drawable.star_big_off);
         }
-//        tvID.setText(pedido.getId());
+       // tvID.setText(pedido.getId());
         tvContacto.setText(" Contacto: "+pedido.getMailContacto());
-//        tvFecha.setText(pedido.getFecha().toString());
+        tvFecha.setText(pedido.getFecha().toString());
         tvDireccion.setText(pedido.getDireccionEnvio());
+
         return fila;
 
 
