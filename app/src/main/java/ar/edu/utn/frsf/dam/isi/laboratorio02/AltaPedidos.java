@@ -54,7 +54,6 @@ public class AltaPedidos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_pedidos);
-
         edtMail =  findViewById(R.id.edtMail);
         edtDirEnvio =  findViewById(R.id.edtDirEnvio);
         edtDirEnvio.setEnabled(false);
@@ -71,15 +70,46 @@ public class AltaPedidos extends AppCompatActivity {
 
         optGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
-        @Override
-            public void onCheckedChanged(RadioGroup arg0, int id) {
-                if(optDomicilio.isChecked()){
-                    edtDirEnvio.setEnabled(true);
-                }else{
-                    edtDirEnvio.setEnabled(false);
-                }
+                    @Override
+                    public void onCheckedChanged(RadioGroup arg0, int id) {
+                        if(optDomicilio.isChecked()){
+                            edtDirEnvio.setEnabled(true);
+                        }else{
+                            edtDirEnvio.setEnabled(false);
+                        }
 
-                }});
+                    }});
+
+
+
+
+
+        Intent i= getIntent();
+        Bundle b = i.getExtras();
+
+        if(b!=null)
+        {
+            int id = (Integer) b.get("idPedidoREQ");
+
+            for(int j=0;j<repositorioPedido.getLista().size();j++){
+            if(repositorioPedido.getLista().get(j).getId().equals(id)) {
+                elPedido = repositorioPedido.getLista().get(j);
+            }
+            }
+            edtMail.setText(elPedido.getMailContacto());
+            edtDirEnvio.setText(elPedido.getDireccionEnvio());
+            //
+            //listaPedido.add(elPedido.getDetalle().get(NNNNNNN));
+            //adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
+            //listaProductos.setAdapter(adapterPedidos);
+
+
+        }
+
+
+
+
+
 
 
         btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +179,7 @@ public class AltaPedidos extends AppCompatActivity {
                 elPedido.setRetirar(optLocal.isChecked());
                 elPedido.setMailContacto(edtMail.getText().toString());
                 elPedido.setDireccionEnvio(edtDirEnvio.getText().toString());
+                elPedido.setEstado(Pedido.Estado.REALIZADO);
                 Log.d("APP_LAB02","Pedido "+elPedido.toString());
 
 
@@ -156,10 +187,15 @@ public class AltaPedidos extends AppCompatActivity {
                 repositorioPedido.guardarPedido(elPedido);
                 elPedido=new Pedido();
 
-                finish();
+                Intent i = new Intent(AltaPedidos.this,HistorialPedidos.class);
+                startActivity(i);
 
             }
         });
+
+
+
+
 
 
 
@@ -179,6 +215,8 @@ public class AltaPedidos extends AppCompatActivity {
             Integer id = Integer.parseInt(idst);
             Integer cantidad = Integer.parseInt(cantidadst);
             PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
+
+            //COMO IDENTIFICO EL PEDIDO DETALLE?
             listaPedido.add(pedidod);
             adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
             listaProductos.setAdapter(adapterPedidos);
