@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.app.Activity;
+import android.widget.Toast;
 
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -90,6 +91,12 @@ public class ListaProductos extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intentResultado = new Intent();
+            if(edtCantidad.getText().toString().equals("0")){
+                Toast.makeText(ListaProductos.this,
+                        "La cantidad ingresada ("+edtCantidad.getText().toString()+") es incorrecta",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
             intentResultado.putExtra("cantidad",edtCantidad.getText().toString());
             Log.d("TEST","Eleccion: "+producto);
             intentResultado.putExtra("producto",(String) producto.getId().toString());

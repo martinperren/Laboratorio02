@@ -37,6 +37,7 @@
             <RadioButton android:id="@+id/optLocal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="Retira en local"/>
             <RadioButton android:id="@+id/optDomicilio"
                 android:layout_width="wrap_content"
@@ -60,7 +61,8 @@
         <EditText android:id="@+id/edtHora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="time"/>
+            android:inputType="time"
+            android:text="00:00"/>
         <ListView
             android:id="@+id/listaProductos"
             android:layout_width="match_parent"
@@ -83,7 +85,7 @@
         </LinearLayout>
         <TextView
             android:id="@+id/tvTotal"
-            android:text="Total del pedido: "
+            android:text="Total del pedido: $ 0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
