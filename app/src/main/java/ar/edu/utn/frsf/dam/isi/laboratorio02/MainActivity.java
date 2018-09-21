@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,ListaProductos.class);
+                i.putExtra("requestCode", "2");
                 startActivity(i);
             }
         });

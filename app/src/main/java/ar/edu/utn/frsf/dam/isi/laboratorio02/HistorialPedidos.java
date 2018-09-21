@@ -32,7 +32,7 @@ public class HistorialPedidos extends AppCompatActivity {
 
         listView=(ListView)findViewById(R.id.listaPedidos);
         adapterProductos = new PedidosAdapter(this,repositorioPedido.getLista());
-          listView.setAdapter(adapterProductos);
+        listView.setAdapter(adapterProductos);
 
     }
 }

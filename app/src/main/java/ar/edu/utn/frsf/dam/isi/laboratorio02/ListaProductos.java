@@ -28,6 +28,7 @@ public class ListaProductos extends AppCompatActivity {
     private TextView tvProducto;
     private ListView listaProductos;
     private EditText edtCantidad;
+    private TextView tvCantidad;
     private Button aceptar;
     private Producto producto;
 
@@ -37,6 +38,11 @@ public class ListaProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
+
+
+
+
         setContentView(R.layout.activity_lista_productos);
         spinner =  findViewById(R.id.spinnerCategoria);
         edtCantidad =  findViewById(R.id.edtCantidad);
@@ -44,11 +50,19 @@ public class ListaProductos extends AppCompatActivity {
         adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, product.getCategorias());
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
+        tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
         tvProducto = findViewById(R.id.productos);
         adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
         listaProductos.setAdapter(adapterProductos);
         this.aceptar.setOnClickListener(listenerBtnAceptar);
+
+        if(this.getIntent().getStringExtra("requestCode").equals("2")){
+            aceptar.setVisibility(View.INVISIBLE);
+            tvCantidad.setVisibility(View.INVISIBLE);
+            edtCantidad.setVisibility(View.INVISIBLE);
+        }
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -83,6 +97,8 @@ public class ListaProductos extends AppCompatActivity {
             finish();
         }
     };
+
+
 
 
 }

@@ -68,6 +68,7 @@ public class AltaPedidos extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AltaPedidos.this,ListaProductos.class);
+                i.putExtra("requestCode", "1");
                 startActivityForResult(i, CODIGO_ACTIVIDAD1);
             }
         });
