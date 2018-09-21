@@ -24,6 +24,7 @@ import java.util.List;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class AltaPedidos extends AppCompatActivity {
@@ -34,7 +35,7 @@ public class AltaPedidos extends AppCompatActivity {
     private RadioButton optLocal;
     private RadioButton optDomicilio;
     private ListView listaProductos;
-    private ArrayAdapter<Producto> adapterProductos;
+    private ArrayAdapter<PedidoDetalle> adapterPedidos;
     private ProductoRepository product = new ProductoRepository();
     private PedidoRepository repositorioPedido = new PedidoRepository();
     private Button btnAgregarProducto;
@@ -43,8 +44,8 @@ public class AltaPedidos extends AppCompatActivity {
     private Pedido elPedido = new Pedido();
     private Button btnVolver;
     private static final int CODIGO_ACTIVIDAD1 = 1;
-    private List<Producto> listaProducto= new ArrayList<>();
-    private Producto producto;
+    private List<PedidoDetalle> listaPedido= new ArrayList<>();
+    private PedidoDetalle pedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +58,8 @@ public class AltaPedidos extends AppCompatActivity {
         optLocal= (RadioButton) findViewById(R.id.optLocal);
         optDomicilio= (RadioButton) findViewById(R.id.optDomicilio);
         listaProductos = findViewById(R.id.listaProductos);
-        adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice);
-        listaProductos.setAdapter(adapterProductos);
+        adapterPedidos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice);
+        listaProductos.setAdapter(adapterPedidos);
         btnHacerPedido =  findViewById(R.id.btnHacerPedido);
 
 
@@ -74,7 +75,7 @@ public class AltaPedidos extends AppCompatActivity {
         listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                producto = (Producto) adapterView.getItemAtPosition(i);
+                pedido = (PedidoDetalle) adapterView.getItemAtPosition(i);
             }
         });
 
@@ -82,9 +83,9 @@ public class AltaPedidos extends AppCompatActivity {
         btnQuitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listaProducto.remove(producto);
-                adapterProductos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaProducto);
-                listaProductos.setAdapter(adapterProductos);
+                listaPedido.remove(pedido);
+                adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
+                listaProductos.setAdapter(adapterPedidos);
             }
         });
 
@@ -132,6 +133,9 @@ public class AltaPedidos extends AppCompatActivity {
                 repositorioPedido.guardarPedido(elPedido);
                 elPedido=new Pedido();
 
+                Intent i = new Intent(AltaPedidos.this,HistorialPedidos.class);
+                startActivity(i);
+
             }
         });
 
@@ -152,9 +156,10 @@ public class AltaPedidos extends AppCompatActivity {
             String idst = data.getStringExtra("producto");
             Integer id = Integer.parseInt(idst);
             Integer cantidad = Integer.parseInt(cantidadst);
-            listaProducto.add(product.buscarPorId(id));
-            adapterProductos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaProducto);
-            listaProductos.setAdapter(adapterProductos);
+            PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
+            listaPedido.add(pedidod);
+            adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
+            listaProductos.setAdapter(adapterPedidos);
         }
     }
 }
