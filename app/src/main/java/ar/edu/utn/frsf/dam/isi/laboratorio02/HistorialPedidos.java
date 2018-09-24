@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
-
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoHolder;
 
 
 public class HistorialPedidos extends AppCompatActivity {
@@ -55,6 +55,8 @@ public class HistorialPedidos extends AppCompatActivity {
                 return true;
             }
         });
+
+
 
 
 

@@ -1,6 +1,7 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,53 +13,94 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoHolder;
 
 public class PedidosAdapter extends ArrayAdapter<Pedido> {
     private Context mContext;
-    private List<Pedido> listaPedidos = new ArrayList<>();
+    private List<Pedido> listaPedidos;
 
     public PedidosAdapter(Context context, List<Pedido> list) {
-        super(context, 0 , list);
+        super(context, 0, list);
         mContext = context;
         listaPedidos = list;
+
+
+
     }
 
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
 
 
         View fila = convertView;
-        if(fila == null)
-            fila = LayoutInflater.from(mContext).inflate(R.layout.lista_pedidos_format,parent,false);
+        if (fila == null)
+            fila = LayoutInflater.from(mContext).inflate(R.layout.lista_pedidos_format, parent, false);
 
-
-
-
-        Pedido pedido =  super.getItem(position);
-        TextView tvID =  fila.findViewById(R.id.tvID);
-        TextView tvContacto=  fila.findViewById(R.id.tvContacto);
-        TextView tvFecha=  fila.findViewById(R.id.tvFecha);
-        TextView tvDireccion = fila.findViewById(R.id.tvDirEnvio);
-        ImageView iwestado =  fila.findViewById(R.id.iwestado);
-
-        if(pedido.getRetirar()){
-            iwestado.setImageResource(android.R.drawable.star_big_on);
-        }else{
-            iwestado.setImageResource(android.R.drawable.star_big_off);
+        PedidoHolder holder = (PedidoHolder) fila.getTag();
+        if (holder == null) {
+            holder = new PedidoHolder(fila);
+            fila.setTag(holder);
         }
-       // tvID.setText(pedido.getId());
-        tvContacto.setText(" Contacto: "+pedido.getMailContacto());
-        tvFecha.setText(pedido.getFecha().toString());
-        tvDireccion.setText(pedido.getDireccionEnvio());
+        Pedido pedido = super.getItem(position);
+
+
+        holder.tvMailPedido.setText(" Contacto: " + pedido.getMailContacto());
+        holder.tvHoraEntrega.setText(pedido.getFecha().toString());
+        if (pedido.getRetirar()) {
+            holder.tipoEntrega.setImageResource(android.R.drawable.star_big_on);
+        } else {
+            holder.tipoEntrega.setImageResource(android.R.drawable.star_big_off);
+        }
+        holder.tvCantidadItems.setText("");
+        holder.tvPrecio.setText("");
+
+        switch (pedido.getEstado()){
+            case LISTO:
+                holder.estado.setTextColor(Color.DKGRAY);
+                break;
+            case ENTREGADO:
+                holder.estado.setTextColor(Color.BLUE);
+                break;
+            case CANCELADO:
+            case RECHAZADO:
+                holder.estado.setTextColor(Color.RED);
+                break;
+            case ACEPTADO:
+                holder.estado.setTextColor(Color.GREEN);
+                break;
+            case EN_PREPARACION:
+                holder.estado.setTextColor(Color.MAGENTA);
+                break;
+            case REALIZADO:
+                holder.estado.setTextColor(Color.BLUE);
+                break;
+        }
+
+
+
+        holder.estado.setText(pedido.getEstado().toString());
+
+holder.btnCancelar.setOnClickListener(  new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        int indice = (int) view.getTag();
+        Pedido pedidoSeleccionado = listaPedidos.get(indice);
+        if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
+                pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
+                pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
+            pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
+            PedidosAdapter.this.notifyDataSetChanged();
+            return;
+        }
+    }
+});
+
 
         return fila;
 
 
 
-
-
-
-       }
+    }
 
 
 

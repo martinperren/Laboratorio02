@@ -67,6 +67,7 @@ public class AltaPedidos extends AppCompatActivity {
         listaProductos.setAdapter(adapterPedidos);
         btnHacerPedido =  findViewById(R.id.btnHacerPedido);
         btnAgregarProducto =  findViewById(R.id.btnAgregarProducto);
+        Integer j;
 
         optGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
@@ -91,7 +92,7 @@ public class AltaPedidos extends AppCompatActivity {
         {
             int id = (Integer) b.get("idPedidoREQ");
 
-            for(int j=0;j<repositorioPedido.getLista().size();j++){
+            for(j=0;j<repositorioPedido.getLista().size();j++){
             if(repositorioPedido.getLista().get(j).getId().equals(id)) {
                 elPedido = repositorioPedido.getLista().get(j);
             }
@@ -99,9 +100,9 @@ public class AltaPedidos extends AppCompatActivity {
             edtMail.setText(elPedido.getMailContacto());
             edtDirEnvio.setText(elPedido.getDireccionEnvio());
             //
-            //listaPedido.add(elPedido.getDetalle().get(NNNNNNN));
-            //adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
-            //listaProductos.setAdapter(adapterPedidos);
+            listaPedido.add(elPedido.getDetalle().get(j));
+            adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
+            listaProductos.setAdapter(adapterPedidos);
 
 
         }
@@ -214,9 +215,12 @@ public class AltaPedidos extends AppCompatActivity {
             String idst = data.getStringExtra("producto");
             Integer id = Integer.parseInt(idst);
             Integer cantidad = Integer.parseInt(cantidadst);
+
+            //???
             PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
 
-            //COMO IDENTIFICO EL PEDIDO DETALLE?
+
+
             listaPedido.add(pedidod);
             adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
             listaProductos.setAdapter(adapterPedidos);
