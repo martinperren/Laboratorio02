@@ -41,7 +41,7 @@ public class AltaPedidos extends AppCompatActivity {
     private Button btnAgregarProducto;
     private Button btnQuitarProducto;
     private Button btnHacerPedido;
-    private Pedido pedido = new Pedido();
+    private Pedido pedido;
     private Button btnVolver;
     private static final int CODIGO_ACTIVIDAD1 = 1;
     private List<PedidoDetalle> listaPedido = new ArrayList<>();
@@ -65,16 +65,18 @@ public class AltaPedidos extends AppCompatActivity {
         listaProductos.setAdapter(adapterPedidos);
         btnHacerPedido = findViewById(R.id.btnHacerPedido);
         btnAgregarProducto = findViewById(R.id.btnAgregarProducto);
-        Integer j;
+        btnQuitarProducto = findViewById(R.id.btnQuitarProducto);
+        btnVolver = findViewById(R.id.btnVolver);
 
         optGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup arg0, int id) {
-                        if (optDomicilio.isChecked()) {
-                            edtDirEnvio.setEnabled(true);
-                        } else {
+                        if (optLocal.isChecked()) {
                             edtDirEnvio.setEnabled(false);
+                            edtDirEnvio.setText("");
+                        } else {
+                            edtDirEnvio.setEnabled(true);
                         }
 
                     }
@@ -83,24 +85,53 @@ public class AltaPedidos extends AppCompatActivity {
 
         Intent i = getIntent();
         Bundle b = i.getExtras();
+        int id = 0;
 
         if (b != null) {
-            int id = (Integer) b.get("idPedidoREQ");
-
-            for (j = 0; j < repositorioPedido.getLista().size(); j++) {
+            id = (Integer) b.get("idPedidoREQ");
+            System.out.println("id: "+ id);
+            for (int j = 0; j < repositorioPedido.getLista().size(); j++) {
                 if (repositorioPedido.getLista().get(j).getId().equals(id)) {
                     pedido = repositorioPedido.getLista().get(j);
-                }
+            }
+            }
+            if(id>-1) {
+                edtMail.setText(pedido.getMailContacto());
+                edtDirEnvio.setText(pedido.getDireccionEnvio());
+
+                optDomicilio.setChecked(!pedido.getRetirar());
+                optLocal.setChecked(pedido.getRetirar());
+
+            }else{
+                System.out.println("else");
+                pedido = new Pedido();
             }
 
-            edtMail.setText(pedido.getMailContacto());
-            edtDirEnvio.setText(pedido.getDireccionEnvio());
 
             //
-            listaPedido.add(pedido.getDetalle().get(j));
+
+
+            for (int j = 0; j < pedido.getDetalle().size(); j++) {
+                listaPedido.add(pedido.getDetalle().get(j));
+                double totalAnterior = Double.parseDouble((tvTotal.getText().subSequence(19, tvTotal.getText().length())).toString());
+                double totalActual = pedido.getDetalle().get(j).getCantidad() * pedido.getDetalle().get(j).getProducto().getPrecio();
+                double total = totalAnterior + totalActual;
+                tvTotal.setText(tvTotal.getText().subSequence(0, 19) + Double.toString(total));
+            }
+
+
             adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
             listaProductos.setAdapter(adapterPedidos);
 
+
+            btnVolver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(AltaPedidos.this, HistorialPedidos.class);
+                    startActivity(i);
+
+                }
+            });
 
         }
 
@@ -121,7 +152,7 @@ public class AltaPedidos extends AppCompatActivity {
             }
         });
 
-        btnQuitarProducto = findViewById(R.id.btnQuitarProducto);
+
         btnQuitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,13 +161,14 @@ public class AltaPedidos extends AppCompatActivity {
                 listaProductos.setAdapter(adapterPedidos);
                 double totalAnterior = Double.parseDouble((tvTotal.getText().subSequence(19, tvTotal.getText().length())).toString());
                 double totalActual = pedidoDetalle.getCantidad() * pedidoDetalle.getProducto().getPrecio();
+                if(totalAnterior>0){
                 double total = totalAnterior - totalActual;
-                tvTotal.setText(tvTotal.getText().subSequence(0, 19) + Double.toString(total));
+                tvTotal.setText(tvTotal.getText().subSequence(0, 19) + Double.toString(total));}
             }
         });
 
-        btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(new View.OnClickListener() {
+
+       btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AltaPedidos.this, MainActivity.class);
@@ -178,7 +210,6 @@ public class AltaPedidos extends AppCompatActivity {
 
 
                 repositorioPedido.guardarPedido(pedido);
-                pedido = new Pedido();
 
                 Intent i = new Intent(AltaPedidos.this, HistorialPedidos.class);
                 startActivity(i);
@@ -202,9 +233,10 @@ public class AltaPedidos extends AppCompatActivity {
             Integer id = Integer.parseInt(idst);
             Integer cantidad = Integer.parseInt(cantidadst);
 
-            //???
 
             PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
+            if(listaPedido.isEmpty()){
+            pedido = new Pedido();}
             pedidod.setPedido(pedido);
 
 

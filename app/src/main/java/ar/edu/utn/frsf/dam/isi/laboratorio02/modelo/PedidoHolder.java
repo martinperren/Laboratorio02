@@ -25,8 +25,8 @@ public class PedidoHolder {
         this.tvCantidadItems = (TextView) base.findViewById(R.id.tvCantidadItems);
         this.tvPrecio = (TextView) base.findViewById(R.id.tvPrecio);
         this.estado = (TextView) base.findViewById(R.id.tvEstado);
-        this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
-        this.btnDetalle = (Button) base.findViewById(R.id.btnVerDetalle);
+      //  this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
+       // this.btnDetalle = (Button) base.findViewById(R.id.btnVerDetalle);
     }
 
 

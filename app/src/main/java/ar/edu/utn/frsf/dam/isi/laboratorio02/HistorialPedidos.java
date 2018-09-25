@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -21,6 +22,8 @@ public class HistorialPedidos extends AppCompatActivity {
     ListView listView;
     private PedidosAdapter adapterProductos;
     private PedidoRepository repositorioPedido = new PedidoRepository();
+    private Button btnNuevo;
+    private Button btnMenu;
 
 
 
@@ -36,23 +39,36 @@ public class HistorialPedidos extends AppCompatActivity {
         adapterProductos = new PedidosAdapter(this,repositorioPedido.getLista());
         listView.setAdapter(adapterProductos);
 
+        btnNuevo = findViewById(R.id.btnNuevo);
+        btnNuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HistorialPedidos.this, AltaPedidos.class);
+                startActivity(i);
+            }
+        });
 
+        btnMenu = findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HistorialPedidos.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
-                // TODO Auto-generated method stub
 
                 Log.v("long clicked","pos: " + pos);
+                System.out.println("TEST");
+
                 Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
                 i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
                 startActivity(i);
-
-
-
-
 
                 return true;
             }
@@ -60,5 +76,18 @@ public class HistorialPedidos extends AppCompatActivity {
 
 
 
+
+
+
     }
+
+
+    public void clickDetalle(AdapterView<?> arg0, View v, int pos, long id) {
+
+        Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
+        i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
+        startActivity(i);
+
+    }
+
 }

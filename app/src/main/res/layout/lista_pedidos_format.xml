@@ -50,30 +50,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="90dp">
-
-
-
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="clickDetalle"
-            android:text="Cancelar" />
-
-        <Button
-            android:id="@+id/btnVerDetalle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="clickCancelar"
-            android:text="Detalles" />
-
-    </LinearLayout>
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="90dp">
 
 
-</android.support.constraint.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="clickCancelar"
+                android:text="Cancelar" />
+
+            <Button
+                android:id="@+id/btnVerDetalle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="clickDetalle"
+                android:text="Detalles" />
+
+        </LinearLayout>-->
+
+
+    </android.support.constraint.ConstraintLayout>

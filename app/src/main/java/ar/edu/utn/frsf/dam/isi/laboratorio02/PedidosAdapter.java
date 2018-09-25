@@ -15,12 +15,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoHolder;
 
 public class PedidosAdapter extends ArrayAdapter<Pedido> {
     private Context mContext;
     private List<Pedido> listaPedidos;
+    private PedidoRepository repositorioPedido = new PedidoRepository();
 
     public PedidosAdapter(Context context, List<Pedido> list) {
         super(context, 0, list);
@@ -90,6 +92,9 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
 
 
     }
+
+
+
 
 
 
