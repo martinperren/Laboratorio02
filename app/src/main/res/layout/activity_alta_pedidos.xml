@@ -11,95 +11,124 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ListaProductos">
+
         <TextView
             android:id="@+id/tvDatosPedido"
-            android:text="Datos del Pedido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/tvMail"
-            android:text="Correo Electronico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/edtMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
+            android:text="Datos del Pedido" />
+
+        <TextView
+            android:id="@+id/tvMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Correo Electronico" />
+
+        <EditText
+            android:id="@+id/edtMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+
         <TextView
             android:id="@+id/tvModoEntrega"
-            android:text="Modo de Entrega"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <RadioGroup android:id="@+id/optEntrega"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:text="Modo de Entrega" />
+
+        <RadioGroup
+            android:id="@+id/optEntrega"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RadioButton android:id="@+id/optLocal"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/optLocal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Retira en local"/>
-            <RadioButton android:id="@+id/optDomicilio"
+                android:text="Retira en local" />
+
+            <RadioButton
+                android:id="@+id/optDomicilio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enviar a domicilio"/>
+                android:text="Enviar a domicilio" />
         </RadioGroup>
+
         <TextView
             android:id="@+id/tvDirEnvio"
-            android:text="Direccion de Envio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/edtDirEnvio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPostalAddress"/>
+            android:text="Direccion de Envio" />
+
+        <EditText
+            android:id="@+id/edtDirEnvio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress" />
+
         <TextView
             android:id="@+id/tvHora"
-            android:text="Hora Solicitada (hh:mm)"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/edtHora"
+            android:layout_height="wrap_content"
+            android:text="Hora Solicitada (hh:mm)" />
+
+        <EditText
+            android:id="@+id/edtHora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="time"
-            android:text="00:00"/>
+            android:text="00:00" />
+
         <ListView
             android:id="@+id/listaProductos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:choiceMode="singleChoice"
-            android:layout_weight="1"></ListView>
+            android:layout_weight="1"
+            android:choiceMode="singleChoice"></ListView>
+
         <LinearLayout
             android:id="@+id/lytContenedor2"
-            android:layout_below="@+id/midTableLayout"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <Button android:id="@+id/btnAgregarProducto"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/midTableLayout">
+
+            <Button
+                android:id="@+id/btnAgregarProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agregar Producto"/>
-            <Button android:id="@+id/btnQuitarProducto"
+                android:text="Agregar Producto" />
+
+            <Button
+                android:id="@+id/btnQuitarProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quitar Producto"/>
+                android:text="Quitar Producto" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tvTotal"
-            android:text="Total del pedido: $ 0"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Total del pedido: $ 0" />
+
         <LinearLayout
             android:id="@+id/lytContenedor3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Button android:id="@+id/btnHacerPedido"
+
+            <Button
+                android:id="@+id/btnHacerPedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hacer Pedido"/>
-            <Button android:id="@+id/btnVolver"
+                android:text="Hacer Pedido" />
+
+            <Button
+                android:id="@+id/btnVolver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Volver"/>
+                android:text="Volver" />
         </LinearLayout>
 
     </LinearLayout>

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Pedido {
 
-    public enum Estado { REALIZADO, ACEPTADO, RECHAZADO,EN_PREPARACION,LISTO,ENTREGADO,CANCELADO}
+    public enum Estado {REALIZADO, ACEPTADO, RECHAZADO, EN_PREPARACION, LISTO, ENTREGADO, CANCELADO}
 
     private Integer id;
     private Date fecha;
@@ -41,7 +41,7 @@ public class Pedido {
     }
 
     public Pedido() {
-        this.detalle =new ArrayList<>();
+        this.detalle = new ArrayList<>();
     }
 
     public Pedido(Date fecha, List<PedidoDetalle> detalle, Estado estado, String direccionEnvio, String mailContacto, Boolean retirar) {
@@ -53,8 +53,6 @@ public class Pedido {
         this.mailContacto = mailContacto;
         this.retirar = retirar;
     }
-
-
 
 
     public Pedido(Date fecha, Estado estado) {
@@ -95,13 +93,13 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public void agregarDetalle(PedidoDetalle det){
-        if(this.detalle == null) this.detalle = new ArrayList<>();
+    public void agregarDetalle(PedidoDetalle det) {
+        if (this.detalle == null) this.detalle = new ArrayList<>();
         this.detalle.add(det);
     }
 
-    public void quitarDetalle(PedidoDetalle det){
-        if(this.detalle != null) this.detalle.remove(det);
+    public void quitarDetalle(PedidoDetalle det) {
+        if (this.detalle != null) this.detalle.remove(det);
     }
 
     @Override
@@ -116,10 +114,10 @@ public class Pedido {
                 '}';
     }
 
-    public Double total(){
+    public Double total() {
         Double total = 0.0;
-        for(PedidoDetalle det: detalle){
-            total+=det.getProducto().getPrecio()*det.getCantidad();
+        for (PedidoDetalle det : detalle) {
+            total += det.getProducto().getPrecio() * det.getCantidad();
         }
         return total;
     }

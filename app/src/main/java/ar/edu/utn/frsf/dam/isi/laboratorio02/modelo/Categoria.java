@@ -51,6 +51,6 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria: " +nombre;
+        return "Categoria: " + nombre;
     }
 }

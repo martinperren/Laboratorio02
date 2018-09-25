@@ -11,44 +11,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ListaProductos">
+
         <TextView
             android:id="@+id/categoriaSeleccionada"
-            android:text="Seleccionar una Categoria"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Seleccionar una Categoria" />
+
         <Spinner
             android:id="@+id/spinnerCategoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></Spinner>
+
         <TextView
             android:id="@+id/productos"
-            android:text="Lista de Productos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Lista de Productos" />
+
         <ListView
             android:id="@+id/listaProductos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:choiceMode="singleChoice"
-            android:layout_weight="1"></ListView>
+            android:layout_weight="1"
+            android:choiceMode="singleChoice"></ListView>
 
         <TextView
             android:id="@+id/tvCantidad"
-            android:text="Cantidad a pedir"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Cantidad a pedir" />
+
         <EditText
             android:id="@+id/edtCantidad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="0"/>
+            android:text="0" />
+
         <Button
             android:id="@+id/btnAceptar"
-            android:text="AGREGAR"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:text="AGREGAR" />
 
 
     </LinearLayout>

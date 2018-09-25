@@ -39,26 +39,21 @@ public class ListaProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
-
-
-
-
         setContentView(R.layout.activity_lista_productos);
-        spinner =  findViewById(R.id.spinnerCategoria);
-        edtCantidad =  findViewById(R.id.edtCantidad);
-        aceptar =  findViewById(R.id.btnAceptar);
+        spinner = findViewById(R.id.spinnerCategoria);
+        edtCantidad = findViewById(R.id.edtCantidad);
+        aceptar = findViewById(R.id.btnAceptar);
         adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, product.getCategorias());
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
         tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
         tvProducto = findViewById(R.id.productos);
-        adapterProductos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,product.getLista());
+        adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, product.getLista());
         listaProductos.setAdapter(adapterProductos);
         this.aceptar.setOnClickListener(listenerBtnAceptar);
 
-        if(this.getIntent().getStringExtra("requestCode").equals("2")){
+        if (this.getIntent().getStringExtra("requestCode").equals("2")) {
             aceptar.setVisibility(View.INVISIBLE);
             tvCantidad.setVisibility(View.INVISIBLE);
             edtCantidad.setVisibility(View.INVISIBLE);
@@ -72,11 +67,11 @@ public class ListaProductos extends AppCompatActivity {
                 adapterProductos = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, product.buscarPorCategoria(cat));
                 listaProductos.setAdapter(adapterProductos);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
-
-
 
 
         listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,21 +86,19 @@ public class ListaProductos extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intentResultado = new Intent();
-            if(edtCantidad.getText().toString().equals("0")){
+            if (edtCantidad.getText().toString().equals("0")) {
                 Toast.makeText(ListaProductos.this,
-                        "La cantidad ingresada ("+edtCantidad.getText().toString()+") es incorrecta",
+                        "La cantidad ingresada (" + edtCantidad.getText().toString() + ") es incorrecta",
                         Toast.LENGTH_LONG).show();
                 return;
             }
-            intentResultado.putExtra("cantidad",edtCantidad.getText().toString());
-            Log.d("TEST","Eleccion: "+producto);
-            intentResultado.putExtra("producto",(String) producto.getId().toString());
-            setResult(Activity.RESULT_OK,intentResultado);
+            intentResultado.putExtra("cantidad", edtCantidad.getText().toString());
+            Log.d("TEST", "Eleccion: " + producto);
+            intentResultado.putExtra("producto", (String) producto.getId().toString());
+            setResult(Activity.RESULT_OK, intentResultado);
             finish();
         }
     };
-
-
 
 
 }

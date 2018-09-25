@@ -2,7 +2,6 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +25,6 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class AltaPedidos extends AppCompatActivity {
 
@@ -43,64 +41,63 @@ public class AltaPedidos extends AppCompatActivity {
     private Button btnAgregarProducto;
     private Button btnQuitarProducto;
     private Button btnHacerPedido;
-    private Pedido elPedido = new Pedido();
+    private Pedido pedido = new Pedido();
     private Button btnVolver;
     private static final int CODIGO_ACTIVIDAD1 = 1;
-    private List<PedidoDetalle> listaPedido= new ArrayList<>();
-    private PedidoDetalle pedido;
+    private List<PedidoDetalle> listaPedido = new ArrayList<>();
+    private PedidoDetalle pedidoDetalle;
     private RadioGroup optGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_pedidos);
-        edtMail =  findViewById(R.id.edtMail);
-        edtDirEnvio =  findViewById(R.id.edtDirEnvio);
+        edtMail = findViewById(R.id.edtMail);
+        edtDirEnvio = findViewById(R.id.edtDirEnvio);
         edtDirEnvio.setEnabled(false);
-        edtHora =  findViewById(R.id.edtHora);
+        edtHora = findViewById(R.id.edtHora);
         tvTotal = findViewById(R.id.tvTotal);
         optGroup = (RadioGroup) findViewById(R.id.optEntrega);
-        optLocal= (RadioButton) findViewById(R.id.optLocal);
-        optDomicilio= (RadioButton) findViewById(R.id.optDomicilio);
+        optLocal = (RadioButton) findViewById(R.id.optLocal);
+        optDomicilio = (RadioButton) findViewById(R.id.optDomicilio);
         listaProductos = findViewById(R.id.listaProductos);
-        adapterPedidos = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice);
+        adapterPedidos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice);
         listaProductos.setAdapter(adapterPedidos);
-        btnHacerPedido =  findViewById(R.id.btnHacerPedido);
-        btnAgregarProducto =  findViewById(R.id.btnAgregarProducto);
+        btnHacerPedido = findViewById(R.id.btnHacerPedido);
+        btnAgregarProducto = findViewById(R.id.btnAgregarProducto);
         Integer j;
 
         optGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup arg0, int id) {
-                        if(optDomicilio.isChecked()){
+                        if (optDomicilio.isChecked()) {
                             edtDirEnvio.setEnabled(true);
-                        }else{
+                        } else {
                             edtDirEnvio.setEnabled(false);
                         }
 
-                    }});
+                    }
+                });
 
 
-
-
-
-        Intent i= getIntent();
+        Intent i = getIntent();
         Bundle b = i.getExtras();
 
-        if(b!=null)
-        {
+        if (b != null) {
             int id = (Integer) b.get("idPedidoREQ");
 
-            for(j=0;j<repositorioPedido.getLista().size();j++){
-            if(repositorioPedido.getLista().get(j).getId().equals(id)) {
-                elPedido = repositorioPedido.getLista().get(j);
+            for (j = 0; j < repositorioPedido.getLista().size(); j++) {
+                if (repositorioPedido.getLista().get(j).getId().equals(id)) {
+                    pedido = repositorioPedido.getLista().get(j);
+                }
             }
-            }
-            edtMail.setText(elPedido.getMailContacto());
-            edtDirEnvio.setText(elPedido.getDireccionEnvio());
+
+            edtMail.setText(pedido.getMailContacto());
+            edtDirEnvio.setText(pedido.getDireccionEnvio());
+
             //
-            listaPedido.add(elPedido.getDetalle().get(j));
+            listaPedido.add(pedido.getDetalle().get(j));
             adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
             listaProductos.setAdapter(adapterPedidos);
 
@@ -108,15 +105,10 @@ public class AltaPedidos extends AppCompatActivity {
         }
 
 
-
-
-
-
-
         btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AltaPedidos.this,ListaProductos.class);
+                Intent i = new Intent(AltaPedidos.this, ListaProductos.class);
                 i.putExtra("requestCode", "1");
                 startActivityForResult(i, CODIGO_ACTIVIDAD1);
             }
@@ -125,29 +117,29 @@ public class AltaPedidos extends AppCompatActivity {
         listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                pedido = (PedidoDetalle) adapterView.getItemAtPosition(i);
+                pedidoDetalle = (PedidoDetalle) adapterView.getItemAtPosition(i);
             }
         });
 
-        btnQuitarProducto =  findViewById(R.id.btnQuitarProducto);
+        btnQuitarProducto = findViewById(R.id.btnQuitarProducto);
         btnQuitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listaPedido.remove(pedido);
+                listaPedido.remove(pedidoDetalle);
                 adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
                 listaProductos.setAdapter(adapterPedidos);
-                double totalAnterior= Double.parseDouble((tvTotal.getText().subSequence(19,tvTotal.getText().length())).toString());
-                double totalActual=pedido.getCantidad()*pedido.getProducto().getPrecio();
-                double total= totalAnterior-totalActual;
-                tvTotal.setText(tvTotal.getText().subSequence(0,19)+Double.toString(total));
+                double totalAnterior = Double.parseDouble((tvTotal.getText().subSequence(19, tvTotal.getText().length())).toString());
+                double totalActual = pedidoDetalle.getCantidad() * pedidoDetalle.getProducto().getPrecio();
+                double total = totalAnterior - totalActual;
+                tvTotal.setText(tvTotal.getText().subSequence(0, 19) + Double.toString(total));
             }
         });
 
-        btnVolver =  findViewById(R.id.btnVolver);
+        btnVolver = findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AltaPedidos.this,MainActivity.class);
+                Intent i = new Intent(AltaPedidos.this, MainActivity.class);
                 startActivity(i);
 
             }
@@ -161,47 +153,41 @@ public class AltaPedidos extends AppCompatActivity {
                 GregorianCalendar hora = new GregorianCalendar();
                 int valorHora = Integer.valueOf(horaIngresada[0]);
                 int valorMinuto = Integer.valueOf(horaIngresada[1]);
-                if(valorHora<0 || valorHora>23){
+                if (valorHora < 0 || valorHora > 23) {
                     Toast.makeText(AltaPedidos.this,
-                            "La hora ingresada ("+valorHora+") es incorrecta",
+                            "La hora ingresada (" + valorHora + ") es incorrecta",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(valorMinuto <0 || valorMinuto >59){
+                if (valorMinuto < 0 || valorMinuto > 59) {
                     Toast.makeText(AltaPedidos.this,
-                            "Los minutos ("+valorMinuto+") son incorrectos",
+                            "Los minutos (" + valorMinuto + ") son incorrectos",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-                hora.set(Calendar.HOUR_OF_DAY,valorHora);
-                hora.set(Calendar.MINUTE,valorMinuto);
-                hora.set(Calendar.SECOND,Integer.valueOf(0));
-                elPedido.setFecha(hora.getTime());
-                elPedido.setRetirar(optLocal.isChecked());
-                elPedido.setMailContacto(edtMail.getText().toString());
-                elPedido.setDireccionEnvio(edtDirEnvio.getText().toString());
-                elPedido.setEstado(Pedido.Estado.REALIZADO);
-                Log.d("APP_LAB02","Pedido "+elPedido.toString());
+                hora.set(Calendar.HOUR_OF_DAY, valorHora);
+                hora.set(Calendar.MINUTE, valorMinuto);
+                hora.set(Calendar.SECOND, Integer.valueOf(0));
+
+                pedido.setFecha(hora.getTime());
+                pedido.setRetirar(optLocal.isChecked());
+                pedido.setMailContacto(edtMail.getText().toString());
+                pedido.setDireccionEnvio(edtDirEnvio.getText().toString());
+                pedido.setEstado(Pedido.Estado.REALIZADO);
+                Log.d("APP_LAB02", "Pedido " + pedido.toString());
 
 
+                repositorioPedido.guardarPedido(pedido);
+                pedido = new Pedido();
 
-                repositorioPedido.guardarPedido(elPedido);
-                elPedido=new Pedido();
-
-                Intent i = new Intent(AltaPedidos.this,HistorialPedidos.class);
+                Intent i = new Intent(AltaPedidos.this, HistorialPedidos.class);
                 startActivity(i);
 
             }
         });
 
 
-
-
-
-
-
     }
-
 
 
     @Override
@@ -217,17 +203,18 @@ public class AltaPedidos extends AppCompatActivity {
             Integer cantidad = Integer.parseInt(cantidadst);
 
             //???
-            PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
 
+            PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
+            pedidod.setPedido(pedido);
 
 
             listaPedido.add(pedidod);
             adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
             listaProductos.setAdapter(adapterPedidos);
-            double totalAnterior= Double.parseDouble((tvTotal.getText().subSequence(19,tvTotal.getText().length())).toString());
-            double totalActual=cantidad*pedidod.getProducto().getPrecio();
-            double total= totalAnterior+totalActual;
-            tvTotal.setText(tvTotal.getText().subSequence(0,19)+Double.toString(total));
+            double totalAnterior = Double.parseDouble((tvTotal.getText().subSequence(19, tvTotal.getText().length())).toString());
+            double totalActual = cantidad * pedidod.getProducto().getPrecio();
+            double total = totalAnterior + totalActual;
+            tvTotal.setText(tvTotal.getText().subSequence(0, 19) + Double.toString(total));
 
         }
     }

@@ -1,10 +1,13 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +47,9 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
         Pedido pedido = super.getItem(position);
 
 
-        holder.tvMailPedido.setText(" Contacto: " + pedido.getMailContacto());
+
+
+        holder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
         holder.tvHoraEntrega.setText(pedido.getFecha().toString());
         if (pedido.getRetirar()) {
             holder.tipoEntrega.setImageResource(android.R.drawable.star_big_on);
@@ -54,7 +59,7 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
         holder.tvCantidadItems.setText("");
         holder.tvPrecio.setText("");
 
-        switch (pedido.getEstado()){
+        switch (pedido.getEstado()) {
             case LISTO:
                 holder.estado.setTextColor(Color.DKGRAY);
                 break;
@@ -77,27 +82,11 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
         }
 
 
-
         holder.estado.setText(pedido.getEstado().toString());
 
-holder.btnCancelar.setOnClickListener(  new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        int indice = (int) view.getTag();
-        Pedido pedidoSeleccionado = listaPedidos.get(indice);
-        if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
-                pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
-                pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
-            pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
-            PedidosAdapter.this.notifyDataSetChanged();
-            return;
-        }
-    }
-});
 
 
         return fila;
-
 
 
     }

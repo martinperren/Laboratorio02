@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoHolder;
+
 
 
 public class HistorialPedidos extends AppCompatActivity {
@@ -37,26 +37,26 @@ public class HistorialPedidos extends AppCompatActivity {
         listView.setAdapter(adapterProductos);
 
 
+
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
                 // TODO Auto-generated method stub
 
-
+                Log.v("long clicked","pos: " + pos);
                 Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
                 i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
                 startActivity(i);
 
 
 
-                Log.v("long clicked","pos: " + pos);
+
 
                 return true;
             }
         });
-
-
 
 
 

@@ -1,67 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-       android:padding="10dp"
-    android:orientation="vertical"
-    tools:context=".PedidosAdapter">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".PedidosAdapter">
+
+
+        <ImageView
+            android:id="@+id/imModoEntrega"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/btn_star" />
+
+        <TextView
+            android:id="@+id/tvEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvMailPedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvHoraEntrega"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvDirEnvio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/tvCantidadItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/tvPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="90dp">
 
 
 
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="clickDetalle"
+            android:text="Cancelar" />
 
-       <ImageView
-           android:id="@+id/imModoEntrega"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@android:drawable/btn_star" />
+        <Button
+            android:id="@+id/btnVerDetalle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="clickCancelar"
+            android:text="Detalles" />
 
-       <TextView
-           android:id="@+id/tvEstado"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-
-       <TextView
-           android:id="@+id/tvMailPedido"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-
-       <TextView
-           android:id="@+id/tvHoraEntrega"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-
-       <TextView
-           android:id="@+id/tvDirEnvio"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-
-
-       <TextView
-           android:id="@+id/tvCantidadItems"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-
-
-       <TextView
-           android:id="@+id/tvPrecio"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-
-
-       <Button
-           android:id="@+id/btnCancelar"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="Cancelar"/>
-
-</LinearLayout>
-
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

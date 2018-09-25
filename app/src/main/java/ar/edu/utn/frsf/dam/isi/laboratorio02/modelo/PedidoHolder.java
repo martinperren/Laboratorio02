@@ -16,16 +16,17 @@ public class PedidoHolder {
     public TextView estado;
     public ImageView tipoEntrega;
     public Button btnCancelar;
-
+    public Button btnDetalle;
 
     public PedidoHolder(View base) {
         this.tipoEntrega = (ImageView) base.findViewById(R.id.imModoEntrega);
         this.tvMailPedido = (TextView) base.findViewById(R.id.tvMailPedido);
         this.tvHoraEntrega = (TextView) base.findViewById(R.id.tvHoraEntrega);
-        this.tvCantidadItems= (TextView) base.findViewById(R.id.tvCantidadItems);
-        this.tvPrecio= (TextView) base.findViewById(R.id.tvPrecio);
-        this.estado= (TextView) base.findViewById(R.id.tvEstado);
+        this.tvCantidadItems = (TextView) base.findViewById(R.id.tvCantidadItems);
+        this.tvPrecio = (TextView) base.findViewById(R.id.tvPrecio);
+        this.estado = (TextView) base.findViewById(R.id.tvEstado);
         this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
+        this.btnDetalle = (Button) base.findViewById(R.id.btnVerDetalle);
     }
 
 
