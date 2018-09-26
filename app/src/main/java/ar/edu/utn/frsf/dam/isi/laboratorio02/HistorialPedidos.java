@@ -1,14 +1,14 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+
 
 
 
@@ -19,8 +19,10 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 public class HistorialPedidos extends AppCompatActivity {
 
 
-    ListView listView;
-    private PedidosAdapter adapterProductos;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private PedidoRepository repositorioPedido = new PedidoRepository();
     private Button btnNuevo;
     private Button btnMenu;
@@ -35,9 +37,16 @@ public class HistorialPedidos extends AppCompatActivity {
         setContentView(R.layout.activity_historial_pedidos);
 
 
-        listView=(ListView)findViewById(R.id.listaPedidos);
-        adapterProductos = new PedidosAdapter(this,repositorioPedido.getLista());
-        listView.setAdapter(adapterProductos);
+        mRecyclerView = (RecyclerView) findViewById(R.id.listaPedidos);
+
+
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new PedidosAdapter(repositorioPedido.getLista());
+        mRecyclerView.setAdapter(mAdapter);
+
+
 
         btnNuevo = findViewById(R.id.btnNuevo);
         btnNuevo.setOnClickListener(new View.OnClickListener() {
@@ -56,24 +65,6 @@ public class HistorialPedidos extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-
-
-                Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
-                i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
-                System.out.println("get id: "+repositorioPedido.getLista().get(pos).getId());
-                startActivity(i);
-
-                return true;
-            }
-        });
-
-
 
 
 

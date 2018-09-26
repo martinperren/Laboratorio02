@@ -15,39 +15,37 @@
         android:text="Pedidos realizados" />
 
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listaPedidos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:longClickable="true" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
-         <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="0dp"
-             android:layout_weight="1"
-             android:gravity="center|bottom"
-             android:orientation="horizontal">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="horizontal">
 
 
-             <Button
-                 android:id="@+id/btnNuevo"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                 android:layout_alignParentBottom="true"
-                 android:text="Nuevo" />
+        <Button
+            android:id="@+id/btnNuevo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:text="Nuevo" />
 
-             <Button
-                 android:id="@+id/btnMenu"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                 android:layout_alignParentBottom="true"
-                 android:text="Menu" />
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:text="Menu" />
 
-         </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 
