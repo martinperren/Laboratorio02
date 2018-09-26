@@ -85,26 +85,23 @@ public class AltaPedidos extends AppCompatActivity {
 
         Intent i = getIntent();
         Bundle b = i.getExtras();
-        int id = 0;
+        int id = 1;
 
         if (b != null) {
             id = (Integer) b.get("idPedidoREQ");
-            System.out.println("id: "+ id);
+
             for (int j = 0; j < repositorioPedido.getLista().size(); j++) {
                 if (repositorioPedido.getLista().get(j).getId().equals(id)) {
                     pedido = repositorioPedido.getLista().get(j);
             }
             }
-            if(id>-1) {
+            if(id>0) {
                 edtMail.setText(pedido.getMailContacto());
                 edtDirEnvio.setText(pedido.getDireccionEnvio());
 
                 optDomicilio.setChecked(!pedido.getRetirar());
                 optLocal.setChecked(pedido.getRetirar());
 
-            }else{
-                System.out.println("else");
-                pedido = new Pedido();
             }
 
 
@@ -133,6 +130,8 @@ public class AltaPedidos extends AppCompatActivity {
                 }
             });
 
+        }else{
+            pedido = new Pedido();
         }
 
 
@@ -156,6 +155,7 @@ public class AltaPedidos extends AppCompatActivity {
         btnQuitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pedido.quitarDetalle(pedidoDetalle);
                 listaPedido.remove(pedidoDetalle);
                 adapterPedidos = new ArrayAdapter<>(AltaPedidos.this, android.R.layout.simple_list_item_single_choice, listaPedido);
                 listaProductos.setAdapter(adapterPedidos);
@@ -235,8 +235,6 @@ public class AltaPedidos extends AppCompatActivity {
 
 
             PedidoDetalle pedidod = new PedidoDetalle(cantidad, product.buscarPorId(id));
-            if(listaPedido.isEmpty()){
-            pedido = new Pedido();}
             pedidod.setPedido(pedido);
 
 

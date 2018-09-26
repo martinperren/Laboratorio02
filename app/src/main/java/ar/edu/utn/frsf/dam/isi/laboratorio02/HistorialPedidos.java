@@ -64,10 +64,10 @@ public class HistorialPedidos extends AppCompatActivity {
                                            int pos, long id) {
 
                 Log.v("long clicked","pos: " + pos);
-                System.out.println("TEST");
 
                 Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
                 i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
+                System.out.println("get id: "+repositorioPedido.getLista().get(pos).getId());
                 startActivity(i);
 
                 return true;
