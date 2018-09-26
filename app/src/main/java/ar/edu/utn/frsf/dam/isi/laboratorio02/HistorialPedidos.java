@@ -63,7 +63,6 @@ public class HistorialPedidos extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
 
-                Log.v("long clicked","pos: " + pos);
 
                 Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
                 i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
@@ -82,12 +81,5 @@ public class HistorialPedidos extends AppCompatActivity {
     }
 
 
-    public void clickDetalle(AdapterView<?> arg0, View v, int pos, long id) {
-
-        Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
-        i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
-        startActivity(i);
-
-    }
 
 }

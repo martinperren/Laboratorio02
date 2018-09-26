@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,8 +26,12 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
     private List<Pedido> listaPedidos;
     private PedidoRepository repositorioPedido = new PedidoRepository();
 
+
+
+
     public PedidosAdapter(Context context, List<Pedido> list) {
         super(context, 0, list);
+
         mContext = context;
         listaPedidos = list;
 
@@ -34,22 +40,25 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
     }
 
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        View fila = convertView;
-        if (fila == null)
-            fila = LayoutInflater.from(mContext).inflate(R.layout.lista_pedidos_format, parent, false);
 
-        PedidoHolder holder = (PedidoHolder) fila.getTag();
+        if (convertView == null)
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.lista_pedidos_format, parent, false);
+
+        PedidoHolder holder = (PedidoHolder) convertView.getTag();
         if (holder == null) {
-            holder = new PedidoHolder(fila);
-            fila.setTag(holder);
+            holder = new PedidoHolder(convertView);
+            convertView.setTag(holder);
         }
         Pedido pedido = super.getItem(position);
 
 
 
+
+       holder.btnCancelar.setFocusable(false);
+        holder.btnCancelar.setClickable(false);
 
         holder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
         holder.tvHoraEntrega.setText(pedido.getFecha().toString());
@@ -84,14 +93,57 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
         }
 
 
+
+
+
+
+        holder.btnDetalle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(mContext,AltaPedidos.class);
+                i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(position).getId());
+                System.out.println("get id: "+repositorioPedido.getLista().get(position).getId());
+                mContext.startActivity(i);
+
+                }
+
+        });
+
+
+
+
+
+
+        holder.btnCancelar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                int indice =  position;
+                Pedido pedidoSeleccionado = listaPedidos.get(indice);
+                if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
+                        pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
+                        pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
+                    pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
+                    PedidosAdapter.this.notifyDataSetChanged();
+                    return;
+                }}
+
+        });
+
+
+
+
         holder.estado.setText(pedido.getEstado().toString());
 
 
 
-        return fila;
+        return convertView;
 
 
     }
+
 
 
 
