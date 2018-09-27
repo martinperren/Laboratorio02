@@ -29,6 +29,8 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
 
 
 
+
+
     public PedidosAdapter(Context context, List<Pedido> list) {
         super(context, 0, list);
 
@@ -60,16 +62,30 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
        holder.btnCancelar.setFocusable(false);
         holder.btnCancelar.setClickable(false);
 
-        holder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
-        holder.tvHoraEntrega.setText(pedido.getFecha().toString());
-        if (pedido.getRetirar()) {
-            holder.tipoEntrega.setImageResource(android.R.drawable.star_big_on);
-        } else {
-            holder.tipoEntrega.setImageResource(android.R.drawable.star_big_off);
-        }
-        holder.tvCantidadItems.setText("");
-        holder.tvPrecio.setText("");
 
+
+        holder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
+        holder.tvHoraEntrega.setText("Fecha de Entrega: "+ pedido.getFecha().toString());
+        if (pedido.getRetirar()) {
+            holder.tipoEntrega.setImageResource(R.drawable.retira);
+        } else {
+            holder.tipoEntrega.setImageResource(R.drawable.envio);
+        }
+        
+        
+        
+        holder.tvCantidadItems.setText("Items: " + Integer.toString(pedido.getDetalle().size()));
+ double total  = 0;
+        
+        for (int i =0; i<pedido.getDetalle().size();i++){
+            int amount = pedido.getDetalle().get(i).getCantidad();
+            double price = pedido.getDetalle().get(i).getProducto().getPrecio();
+            total = total + amount * price;
+            
+        }
+        
+       holder.tvPrecio.setText("A pagar: $" + Double.toString(total));
+        
         switch (pedido.getEstado()) {
             case LISTO:
                 holder.estado.setTextColor(Color.DKGRAY);
