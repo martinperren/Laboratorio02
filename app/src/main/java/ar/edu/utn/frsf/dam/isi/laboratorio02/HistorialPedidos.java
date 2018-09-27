@@ -66,7 +66,6 @@ public class HistorialPedidos extends AppCompatActivity {
 
                 Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
                 i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
-                System.out.println("get id: "+repositorioPedido.getLista().get(pos).getId());
                 startActivity(i);
 
                 return true;
