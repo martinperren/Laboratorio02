@@ -181,6 +181,37 @@ public class AltaPedidos extends AppCompatActivity {
         btnHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.currentThread().sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        // buscar pedidos no aceptados y aceptarlos automáticamente
+                        List<Pedido> lista = repositorioPedido.getLista();
+                        for(Pedido p:lista){
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                                p.setEstado(Pedido.Estado.ACEPTADO);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(AltaPedidos.this,
+                                        "Informacion de pedidos actualizada!",
+                                Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                };
+                Thread unHilo = new Thread(r);
+                unHilo.start();
+
+
+
                 String[] horaIngresada = edtHora.getText().toString().split(":");
                 GregorianCalendar hora = new GregorianCalendar();
                 int valorHora = Integer.valueOf(horaIngresada[0]);
