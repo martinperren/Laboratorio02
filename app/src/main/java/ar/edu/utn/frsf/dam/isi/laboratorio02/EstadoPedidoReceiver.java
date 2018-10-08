@@ -28,6 +28,33 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
+        if (intent.getAction().equals(ESTADO_LISTO)) {
+            Bundle b = intent.getExtras();
+            Integer idPedido = (Integer) b.get("idPedido");
+            Pedido p = repositoryPedido.buscarPorId(idPedido);
+
+
+            Intent destino = new Intent(context, AltaPedidos.class);
+            destino.putExtra("idPedidoREQ", p.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(context, p.getId(), destino, PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification notification = new NotificationCompat.Builder(context, "CANAL01")
+                    .setSmallIcon(R.drawable.envio)
+                    .setContentTitle("Tu pedido está listo")
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .setStyle(new NotificationCompat.InboxStyle()
+                            .addLine("ID: " + p.getId())
+                            .addLine("Mail:" + p.getMailContacto())
+                            .addLine("Previsto para:" + p.getFecha().toString()))
+                    .build();
+            NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+
+            manager.notify(p.getId(), notification);
+        }
+
         if (intent.getAction().equals(ESTADO_EN_PREPARACION)) {
             Bundle b = intent.getExtras();
             Integer idPedido = (Integer) b.get("idPedido");
