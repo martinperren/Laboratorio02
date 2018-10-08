@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnNuevoPedido;
     private Button btnHistorial;
     private Button btnListaProductos;
+    private Button btnPrepararPedidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnPrepararPedidos= (Button)findViewById(R.id.btnPrepararPedidos);
+
+        btnPrepararPedidos.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // lanzar un servicio Intent service
+                    }
+                }
+        );
     }
+
+
 
     private void createNotificationChannel() {
         // Crear el canal de notificaciones pero solo para API 26 io superior
