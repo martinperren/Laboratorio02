@@ -191,7 +191,10 @@ public class AltaPedidos extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
+
                             Thread.currentThread().sleep(5000);
+
+
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -200,6 +203,7 @@ public class AltaPedidos extends AppCompatActivity {
                         for(Pedido p:lista){
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO))
                                 p.setEstado(Pedido.Estado.ACEPTADO);
+
                             Intent intentAceptado = new Intent(AltaPedidos.this,EstadoPedidoReceiver.class);
                             intentAceptado.putExtra("idPedido",p.getId());
                             intentAceptado.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
@@ -209,8 +213,6 @@ public class AltaPedidos extends AppCompatActivity {
 
 
                         }
-
-
 
 
 
