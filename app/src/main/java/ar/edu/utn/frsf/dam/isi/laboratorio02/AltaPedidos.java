@@ -1,7 +1,9 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,6 +83,8 @@ public class AltaPedidos extends AppCompatActivity {
 
                     }
                 });
+
+
 
 
         Intent i = getIntent();
@@ -181,6 +185,35 @@ public class AltaPedidos extends AppCompatActivity {
         btnHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+
+                            Thread.currentThread().sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        // buscar pedidos no aceptados y aceptarlos automáticamente
+                        List<Pedido> lista = repositorioPedido.getLista();
+                        for(Pedido p:lista){
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)){
+                                p.setEstado(Pedido.Estado.ACEPTADO);
+                                Intent intentAceptado = new Intent(AltaPedidos.this,EstadoPedidoReceiver.class);
+                                intentAceptado.putExtra("idPedido",p.getId());
+                                intentAceptado.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                sendBroadcast(intentAceptado);
+                            }
+                        }
+                    }
+                };
+                Thread unHilo = new Thread(r);
+                unHilo.start();
+
+
+
                 String[] horaIngresada = edtHora.getText().toString().split(":");
                 GregorianCalendar hora = new GregorianCalendar();
                 int valorHora = Integer.valueOf(horaIngresada[0]);

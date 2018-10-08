@@ -20,14 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
+        android:layout_weight="1"
         android:layout_above="@+id/botones"
         android:longClickable="true" />
 
          <LinearLayout
              android:id="@+id/botones"
              android:layout_width="match_parent"
-             android:layout_height="0dp"
-             android:layout_weight="1"
+             android:layout_height="wrap_content"
              android:gravity="center|bottom"
              android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
 
              <Button
                  android:id="@+id/btnNuevo"
-                 android:layout_width="0dp"
+                 android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_weight="1"
                  android:layout_alignParentBottom="true"
@@ -43,7 +43,7 @@
 
              <Button
                  android:id="@+id/btnMenu"
-                 android:layout_width="0dp"
+                 android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_weight="1"
                  android:layout_alignParentBottom="true"

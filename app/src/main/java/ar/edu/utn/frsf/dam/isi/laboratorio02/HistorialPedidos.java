@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
-
 
 
 public class HistorialPedidos extends AppCompatActivity {
@@ -26,17 +24,14 @@ public class HistorialPedidos extends AppCompatActivity {
     private Button btnMenu;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial_pedidos);
 
 
-        listView=(ListView)findViewById(R.id.listaPedidos);
-        adapterProductos = new PedidosAdapter(this,repositorioPedido.getLista());
+        listView = (ListView) findViewById(R.id.listaPedidos);
+        adapterProductos = new PedidosAdapter(this, repositorioPedido.getLista());
         listView.setAdapter(adapterProductos);
 
         btnNuevo = findViewById(R.id.btnNuevo);
@@ -64,9 +59,8 @@ public class HistorialPedidos extends AppCompatActivity {
                                            int pos, long id) {
 
 
-                Intent i = new Intent(HistorialPedidos.this,AltaPedidos.class);
-                i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(pos).getId());
-                System.out.println("get id: "+repositorioPedido.getLista().get(pos).getId());
+                Intent i = new Intent(HistorialPedidos.this, AltaPedidos.class);
+                i.putExtra("idPedidoREQ", repositorioPedido.getLista().get(pos).getId());
                 startActivity(i);
 
                 return true;
@@ -74,12 +68,7 @@ public class HistorialPedidos extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
-
 
 
 }
