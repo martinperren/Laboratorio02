@@ -17,8 +17,34 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListaProductos" />
-        <activity android:name=".AltaPedidos" />
-        <activity android:name=".HistorialPedidos"></activity>
+        <activity android:name=".AltaPedidos">
+
+
+        <intent-filter>
+            <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_ACEPTADO"/>
+            <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_CANCELADO"/>
+            <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_EN_PREPARACION"/>
+            <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_LISTO"/>
+        </intent-filter>
+
+        </activity>
+
+
+
+
+
+        <activity android:name=".HistorialPedidos" />
+
+
+
+
+        <receiver
+            android:name=".EstadoPedidoReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+
+        </receiver>
     </application>
 
 </manifest>

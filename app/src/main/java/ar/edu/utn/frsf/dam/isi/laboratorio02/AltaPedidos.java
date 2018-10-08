@@ -1,7 +1,9 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,6 +83,8 @@ public class AltaPedidos extends AppCompatActivity {
 
                     }
                 });
+
+
 
 
         Intent i = getIntent();
@@ -187,7 +191,10 @@ public class AltaPedidos extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            Thread.currentThread().sleep(10000);
+
+                            Thread.currentThread().sleep(5000);
+
+
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -196,15 +203,18 @@ public class AltaPedidos extends AppCompatActivity {
                         for(Pedido p:lista){
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO))
                                 p.setEstado(Pedido.Estado.ACEPTADO);
+
+                            Intent intentAceptado = new Intent(AltaPedidos.this,EstadoPedidoReceiver.class);
+                            intentAceptado.putExtra("idPedido",p.getId());
+                            intentAceptado.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                            sendBroadcast(intentAceptado);
+
+
+
+
                         }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(AltaPedidos.this,
-                                        "Informacion de pedidos actualizada!",
-                                Toast.LENGTH_LONG).show();
-                            }
-                        });
+
+
 
                     }
                 };
