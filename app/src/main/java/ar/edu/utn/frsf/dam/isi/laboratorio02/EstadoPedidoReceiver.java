@@ -15,7 +15,6 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 
-
 public class EstadoPedidoReceiver extends BroadcastReceiver {
 
 
@@ -29,8 +28,7 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
-        if(intent.getAction().equals(ESTADO_EN_PREPARACION)){
-            System.out.println("entra");
+        if (intent.getAction().equals(ESTADO_EN_PREPARACION)) {
             Bundle b = intent.getExtras();
             Integer idPedido = (Integer) b.get("idPedido");
             Pedido p = repositoryPedido.buscarPorId(idPedido);
@@ -41,55 +39,59 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(context, 0, destino, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getActivity(context, p.getId(), destino, PendingIntent.FLAG_UPDATE_CURRENT);
             Notification notification = new NotificationCompat.Builder(context, "CANAL01")
                     .setSmallIcon(R.drawable.envio)
                     .setContentTitle("Tu pedido está siendo preparado")
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
                     .setStyle(new NotificationCompat.InboxStyle()
-                            .addLine("Mail:" +p.getMailContacto())
-                            .addLine("Previsto para:" +p.getFecha().toString()))
+                            .addLine("ID: " + p.getId())
+                            .addLine("Mail:" + p.getMailContacto())
+                            .addLine("Previsto para:" + p.getFecha().toString()))
                     .build();
             NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-            manager.notify(1,notification);
+
+            manager.notify(p.getId(), notification);
         }
 
 
-      if(intent.getAction().equals(ESTADO_ACEPTADO)) {
-          Bundle b = intent.getExtras();
-          Integer idPedido = (Integer) b.get("idPedido");
-          Pedido p = repositoryPedido.buscarPorId(idPedido);
+        if (intent.getAction().equals(ESTADO_ACEPTADO)) {
+            Bundle b = intent.getExtras();
+            Integer idPedido = (Integer) b.get("idPedido");
+            Pedido p = repositoryPedido.buscarPorId(idPedido);
 
-          double total  = 0;
-          for (int i =0; i<p.getDetalle().size();i++){
-              int amount = p.getDetalle().get(i).getCantidad();
-              double price = p.getDetalle().get(i).getProducto().getPrecio();
-              total = total + amount * price;
+            double total = 0;
+            for (int i = 0; i < p.getDetalle().size(); i++) {
+                int amount = p.getDetalle().get(i).getCantidad();
+                double price = p.getDetalle().get(i).getProducto().getPrecio();
+                total = total + amount * price;
 
-          }
-
-
-          Intent destino = new Intent(context, AltaPedidos.class);
-          destino.putExtra("idPedidoREQ", p.getId());
-          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                  Intent.FLAG_ACTIVITY_CLEAR_TASK);
-          PendingIntent pendingIntent =
-                  PendingIntent.getActivity(context, 0, destino, PendingIntent.FLAG_UPDATE_CURRENT);
-          Notification notification = new NotificationCompat.Builder(context, "CANAL01")
-                  .setSmallIcon(R.drawable.envio)
-                  .setContentTitle("Tu pedido fue aceptado")
-                  .setContentIntent(pendingIntent)
-                  .setAutoCancel(true)
-                  .setStyle(new NotificationCompat.InboxStyle()
-                          .addLine("El costo será de $"+total)
-                          .addLine("Previsto para:" +p.getFecha().toString()))
-                  .build();
-          NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-          manager.notify(1,notification);
+            }
 
 
-      }
+            Intent destino = new Intent(context, AltaPedidos.class);
+            destino.putExtra("idPedidoREQ", p.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setAction(Long.toString(System.currentTimeMillis()));
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(context, p.getId(), destino, PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification notification = new NotificationCompat.Builder(context, "CANAL01")
+                    .setSmallIcon(R.drawable.envio)
+                    .setContentTitle("Tu pedido fue aceptado")
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .setStyle(new NotificationCompat.InboxStyle()
+                            .addLine("ID: " + p.getId())
+                            .addLine("El costo será de $" + total)
+                            .addLine("Previsto para:" + p.getFecha().toString()))
+                    .build();
+            NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+            manager.notify(p.getId(), notification);
+
+
+        }
 
 
     }

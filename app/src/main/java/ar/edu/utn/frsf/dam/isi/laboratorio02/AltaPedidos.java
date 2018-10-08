@@ -192,30 +192,21 @@ public class AltaPedidos extends AppCompatActivity {
                     public void run() {
                         try {
 
-                            Thread.currentThread().sleep(5000);
-
-
+                            Thread.currentThread().sleep(3000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         // buscar pedidos no aceptados y aceptarlos automáticamente
                         List<Pedido> lista = repositorioPedido.getLista();
                         for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)){
                                 p.setEstado(Pedido.Estado.ACEPTADO);
-
-                            Intent intentAceptado = new Intent(AltaPedidos.this,EstadoPedidoReceiver.class);
-                            intentAceptado.putExtra("idPedido",p.getId());
-                            intentAceptado.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
-                            sendBroadcast(intentAceptado);
-
-
-
-
+                                Intent intentAceptado = new Intent(AltaPedidos.this,EstadoPedidoReceiver.class);
+                                intentAceptado.putExtra("idPedido",p.getId());
+                                intentAceptado.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                sendBroadcast(intentAceptado);
+                            }
                         }
-
-
-
                     }
                 };
                 Thread unHilo = new Thread(r);

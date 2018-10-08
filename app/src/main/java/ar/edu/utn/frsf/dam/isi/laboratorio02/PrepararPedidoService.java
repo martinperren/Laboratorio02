@@ -22,7 +22,7 @@ public class PrepararPedidoService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         try {
-            Thread.sleep(6000);
+            Thread.sleep(2000);
             List<Pedido> lista = pr.getLista();
             for(Pedido p:lista) {
                 if (p.getEstado().equals(Pedido.Estado.ACEPTADO)) {
