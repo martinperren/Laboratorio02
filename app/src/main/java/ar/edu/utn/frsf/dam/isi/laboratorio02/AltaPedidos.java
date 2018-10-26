@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class AltaPedidos extends AppCompatActivity {
     private List<PedidoDetalle> listaPedido = new ArrayList<>();
     private PedidoDetalle pedidoDetalle;
     private RadioGroup optGroup;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +86,8 @@ public class AltaPedidos extends AppCompatActivity {
                     }
                 });
 
-
-
+        //no funciona
+        edtMail.setText(pref.getString("edit_text_preference_1","default"));
 
         Intent i = getIntent();
         Bundle b = i.getExtras();
