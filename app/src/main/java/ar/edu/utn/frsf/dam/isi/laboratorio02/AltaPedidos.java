@@ -2,9 +2,11 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +30,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.ConfiguracionActivity;
 
 public class AltaPedidos extends AppCompatActivity {
 
@@ -50,12 +53,22 @@ public class AltaPedidos extends AppCompatActivity {
     private List<PedidoDetalle> listaPedido = new ArrayList<>();
     private PedidoDetalle pedidoDetalle;
     private RadioGroup optGroup;
-    private SharedPreferences pref;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_pedidos);
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+
+
+
+
+
         edtMail = findViewById(R.id.edtMail);
         edtDirEnvio = findViewById(R.id.edtDirEnvio);
         edtDirEnvio.setEnabled(false);
@@ -72,6 +85,18 @@ public class AltaPedidos extends AppCompatActivity {
         btnQuitarProducto = findViewById(R.id.btnQuitarProducto);
         btnVolver = findViewById(R.id.btnVolver);
 
+
+
+        edtMail.setText(pref.getString("emailpref",""));
+
+        if(pref.getBoolean("retirarpref",false)){
+            optLocal.setChecked(true);
+        }else{
+            optDomicilio.setChecked(true);
+        }
+
+
+
         optGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
                     @Override
@@ -86,8 +111,8 @@ public class AltaPedidos extends AppCompatActivity {
                     }
                 });
 
-        //no funciona
-        edtMail.setText(pref.getString("edit_text_preference_1","default"));
+
+
 
         Intent i = getIntent();
         Bundle b = i.getExtras();

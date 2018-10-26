@@ -53,7 +53,15 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ConfiguracionActivity"></activity>
+
+        <activity android:name=".ConfiguracionActivity"
+            android:label="Settings"
+            android:parentActivityName=".AltaPedidos">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AltaPedidos"/>
+        </activity>
+
     </application>
 
 </manifest>
