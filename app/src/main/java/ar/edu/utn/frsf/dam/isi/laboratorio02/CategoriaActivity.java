@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -41,6 +42,11 @@ public class CategoriaActivity extends AppCompatActivity {
                 };
                 Thread hiloSec = new Thread(r);
                 hiloSec.start();
+                Toast toast1 =
+                        Toast.makeText(getApplicationContext(),
+                                "La categoria fue creada", Toast.LENGTH_SHORT);
+                toast1.show();
+                textoCat.setText("");
             }
         });
         btnMenu= (Button) findViewById(R.id.btnCategoriaVolver);
