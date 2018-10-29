@@ -64,11 +64,6 @@ public class AltaPedidos extends AppCompatActivity {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
-
-
-
-
-
         edtMail = findViewById(R.id.edtMail);
         edtDirEnvio = findViewById(R.id.edtDirEnvio);
         edtDirEnvio.setEnabled(false);
