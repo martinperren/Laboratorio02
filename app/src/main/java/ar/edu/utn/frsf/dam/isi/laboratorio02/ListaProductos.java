@@ -43,14 +43,10 @@ public class ListaProductos extends AppCompatActivity {
         spinner = findViewById(R.id.spinnerCategoria);
         edtCantidad = findViewById(R.id.edtCantidad);
         aceptar = findViewById(R.id.btnAceptar);
-        //adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, product.getCategorias());
-        //adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapterCategoria);
         tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
         tvProducto = findViewById(R.id.productos);
         adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, product.getLista());
-        listaProductos.setAdapter(adapterProductos);
         this.aceptar.setOnClickListener(listenerBtnAceptar);
 
         if (this.getIntent().getStringExtra("requestCode").equals("2")) {
@@ -94,7 +90,6 @@ public class ListaProductos extends AppCompatActivity {
                         adapterCategoria = new ArrayAdapter<Categoria>(ListaProductos.this, android.R.layout.simple_spinner_dropdown_item, cats);
 
 
-
                         spinner.setAdapter(adapterCategoria);
                         spinner.setSelection(0);
                         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -113,7 +108,8 @@ public class ListaProductos extends AppCompatActivity {
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
                             }
-                        });
+                        })
+                        ;
 
                         listaProductos.setAdapter(adapterProductos);
                     }
