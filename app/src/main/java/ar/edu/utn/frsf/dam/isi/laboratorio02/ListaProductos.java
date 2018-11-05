@@ -38,61 +38,18 @@ public class ListaProductos extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_lista_productos);
-
-        ProductoRepository productoRepo = new ProductoRepository();
-        int idProductoSel=0;
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                CategoriaRest catRest = new CategoriaRest();
-                final Categoria[] cats = catRest.listarTodas()
-                        .toArray(new Categoria[0]);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapterCategoria = new
-                                ArrayAdapter<Categoria>(ListaProductos.this,android.R.layout.simple_spinner_dropdown_item,cats);
-                        spinner = (Spinner) findViewById(R.id.spinnerCategoria);
-
-                        spinner.setAdapter(adapterCategoria);
-                        spinner.setSelection(0);
-                        spinner.setOnItemSelectedListener(new
-                         AdapterView.OnItemSelectedListener() {
-                              @Override
-                                  public void onItemSelected(AdapterView<?> parent, View view, int
-                                         position, long id) {
-
-                                  adapterProductos.clear();
-
-                                  adapterProductos.addAll(product.buscarPorCategoria(
-                                                       (Categoria)parent.getItemAtPosition(position))
-                                            );
-
-                                  adapterProductos.notifyDataSetChanged();
-                                          }
-                             @Override
-                             public void onNothingSelected(AdapterView<?> parent) {}
-                         });
-                        adapterProductos = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_single_choice, product.getLista());
-                        listaProductos = (ListView) findViewById(R.id.listaProductos);
-                        listaProductos.setAdapter(adapterProductos);
-                    }
-                });
-            }
-        };
-        Thread hiloCargarCombo = new Thread(r);
-        hiloCargarCombo.start();
-                                          //spinner = findViewById(R.id.spinnerCategoria);
+        spinner = findViewById(R.id.spinnerCategoria);
         edtCantidad = findViewById(R.id.edtCantidad);
         aceptar = findViewById(R.id.btnAceptar);
         //adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, product.getCategorias());
-        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(adapterCategoria);
+        //adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterCategoria);
         tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
         tvProducto = findViewById(R.id.productos);
-        //adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, product.getLista());
+        adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, product.getLista());
         listaProductos.setAdapter(adapterProductos);
         this.aceptar.setOnClickListener(listenerBtnAceptar);
 
@@ -123,6 +80,50 @@ public class ListaProductos extends AppCompatActivity {
                 producto = (Producto) adapterView.getItemAtPosition(i);
             }
         });
+
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                CategoriaRest catRest = new CategoriaRest();
+                final Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        adapterCategoria = new ArrayAdapter<Categoria>(ListaProductos.this, android.R.layout.simple_spinner_dropdown_item, cats);
+
+
+
+                        spinner.setAdapter(adapterCategoria);
+                        spinner.setSelection(0);
+                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int
+                                    position, long id) {
+
+                                adapterProductos.clear();
+
+                                adapterProductos.addAll(product.buscarPorCategoria((Categoria) parent.getItemAtPosition(position))
+                                );
+
+                                adapterProductos.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                            }
+                        });
+
+                        listaProductos.setAdapter(adapterProductos);
+                    }
+                });
+            }
+        };
+        Thread hiloCargarCombo = new Thread(r);
+        hiloCargarCombo.start();
+
+
     }
 
     private View.OnClickListener listenerBtnAceptar = new View.OnClickListener() {

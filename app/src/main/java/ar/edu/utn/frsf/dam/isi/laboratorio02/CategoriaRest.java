@@ -45,7 +45,7 @@ public class CategoriaRest {
             //Abrir una conexión al servidor para enviar el POST
 
 
-            URL url = new URL("http://10.0.2.2:5000/categorias");
+            URL url = new URL("http://10.0.2.2:2700/categorias");
 
 
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -117,7 +117,7 @@ public class CategoriaRest {
         HttpURLConnection urlConnection = null;
         InputStream in =null;
 // GESTIONAR LA CONEXION
-        URL url = new URL("http://10.0.2.2:5000/categorias");
+        URL url = new URL("http://10.0.2.2:2700/categorias");
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestProperty("Accept-Type","application/json");
         urlConnection.setRequestMethod("GET");
@@ -144,7 +144,8 @@ public class CategoriaRest {
             for(int i=0;i<listaCategorias.length();i++){
                 Categoria cat = new Categoria();
                 ///////////////////////////
-                cat.setNombre(listaCategorias.get(i).toString());
+                cat.setNombre(listaCategorias.getJSONObject(i).getString("nombre"));
+                cat.setId(listaCategorias.getJSONObject(i).getInt("id"));
                 // analizar cada element del JSONArray
                 //armar una instancia de categoría y agregarla a la lista
                 resultado.add(cat);
