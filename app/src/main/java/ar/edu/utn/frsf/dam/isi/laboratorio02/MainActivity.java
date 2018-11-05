@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPrepararPedidos;
     private Button btnConfiguracion;
     private Button btnCategoria;
+    private Button btnGestionProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
 
 
-
+        btnGestionProducto = findViewById(R.id.btnGestionProducto);
         btnNuevoPedido = findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, ConfiguracionActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnGestionProducto = findViewById(R.id.btnGestionProducto);
+        btnGestionProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, GestionProductoActivity.class);
                 startActivity(i);
             }
         });
