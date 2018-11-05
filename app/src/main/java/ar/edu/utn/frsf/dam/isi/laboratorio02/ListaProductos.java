@@ -43,8 +43,8 @@ public class ListaProductos extends AppCompatActivity {
         spinner = findViewById(R.id.spinnerCategoria);
         edtCantidad = findViewById(R.id.edtCantidad);
         aceptar = findViewById(R.id.btnAceptar);
-        adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, product.getCategorias());
-        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, product.getCategorias());
+        //adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
         tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
@@ -80,6 +80,50 @@ public class ListaProductos extends AppCompatActivity {
                 producto = (Producto) adapterView.getItemAtPosition(i);
             }
         });
+
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                CategoriaRest catRest = new CategoriaRest();
+                final Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        adapterCategoria = new ArrayAdapter<Categoria>(ListaProductos.this, android.R.layout.simple_spinner_dropdown_item, cats);
+
+
+
+                        spinner.setAdapter(adapterCategoria);
+                        spinner.setSelection(0);
+                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int
+                                    position, long id) {
+
+                                adapterProductos.clear();
+
+                                adapterProductos.addAll(product.buscarPorCategoria((Categoria) parent.getItemAtPosition(position))
+                                );
+
+                                adapterProductos.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                            }
+                        });
+
+                        listaProductos.setAdapter(adapterProductos);
+                    }
+                });
+            }
+        };
+        Thread hiloCargarCombo = new Thread(r);
+        hiloCargarCombo.start();
+
+
     }
 
     private View.OnClickListener listenerBtnAceptar = new View.OnClickListener() {
