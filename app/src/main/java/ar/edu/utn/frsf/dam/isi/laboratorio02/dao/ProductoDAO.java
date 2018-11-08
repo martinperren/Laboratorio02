@@ -10,17 +10,16 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 @Dao
-public interface CategoriaDAO {
+public interface ProductoDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     void insertCategoria(Categoria categoria);
+    void insertCategoria(Producto producto);
     @Delete
-     void deleteCategoria(Categoria categoria);
+    void deleteCategoria(Producto producto);
     @Update
-     void updateCategoria(Categoria categoria);
-    @Query("SELECT * FROM CATEGORIA")
+    void updateCategoria(Producto producto);
+    @Query("SELECT * FROM PRODUCTO")
     List<Categoria> getAll();
-
-
 }

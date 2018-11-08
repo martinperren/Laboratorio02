@@ -1,18 +1,50 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+
+
+@Entity(tableName ="PEDIDODETALLE", foreignKeys = @ForeignKey(entity = Pedido.class,
+        parentColumns = "ID_PEDIDO",
+        childColumns = "PEDIDO_ID"))
+
 public class PedidoDetalle {
 
-    private static int ID_DETALLE = 1;
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "PEDIDO_ID")
     private Integer id;
-    private Integer cantidad;
     private Producto producto;
     private Pedido pedido;
+
+    private static int ID_DETALLE =1;
+    private Integer cantidad;
+
 
     public PedidoDetalle(Integer cantidad, Producto producto) {
         id = ID_DETALLE++;
         this.cantidad = cantidad;
         this.producto = producto;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Integer getId() {
         return id;
