@@ -15,11 +15,11 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 @Dao
 public interface ProductoDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCategoria(Producto producto);
+    void insertProducto(Producto producto);
     @Delete
-    void deleteCategoria(Producto producto);
+    void deleteProducto(Producto producto);
     @Update
-    void updateCategoria(Producto producto);
+    void updateProducto(Producto producto);
     @Query("SELECT * FROM PRODUCTO")
-    List<Categoria> getAll();
+    List<Producto> getAll();
 }

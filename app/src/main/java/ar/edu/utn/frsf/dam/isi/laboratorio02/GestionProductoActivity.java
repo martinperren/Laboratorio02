@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.BaseDatos;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRetrofit;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
@@ -35,12 +36,14 @@ public class GestionProductoActivity extends AppCompatActivity {
     private ArrayAdapter<Categoria> adapterCategoria;
     private Categoria c;
     private int idProductoAct;
+    private BaseDatos bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bd = new BaseDatos(getApplicationContext());
         setContentView(R.layout.activity_gestion_producto);
-        flagActualizacion = false;
+
         opcionNuevoBusqueda = (ToggleButton)
                 findViewById(R.id.abmProductoAltaNuevo);
         idProductoBuscar = (EditText)
@@ -60,12 +63,17 @@ public class GestionProductoActivity extends AppCompatActivity {
                 findViewById(R.id.btnAbmProductoBuscar);
         btnBorrar = (Button)
                 findViewById(R.id.btnAbmProductoBorrar);
+
+        adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bd.getCategoria());
+        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        comboCategorias.setAdapter(adapterCategoria);
+        flagActualizacion = false;
         opcionNuevoBusqueda.setChecked(false);
         btnBuscar.setEnabled(false);
         btnBorrar.setEnabled(false);
         idProductoBuscar.setEnabled(false);
 
-
+/*
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -74,7 +82,7 @@ public class GestionProductoActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        adapterCategoria = new ArrayAdapter<Categoria>(GestionProductoActivity.this, android.R.layout.simple_spinner_dropdown_item, cats);
+                        adapterCategoria = new ArrayAdapter<>(GestionProductoActivity.this, android.R.layout.simple_spinner_dropdown_item, cats);
 
                         comboCategorias.setAdapter(adapterCategoria);
 
@@ -86,7 +94,7 @@ public class GestionProductoActivity extends AppCompatActivity {
 
         Thread hiloCargarCombo = new Thread(r);
         hiloCargarCombo.start();
-
+*/
 
         opcionNuevoBusqueda.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,7 +123,12 @@ public class GestionProductoActivity extends AppCompatActivity {
                 p.setPrecio(Double.parseDouble(precioProducto.getText().toString()));
                 if(opcionNuevoBusqueda.isChecked()){
                     flagActualizacion = true;
-                    ProductoRetrofit clienteRest =
+
+
+
+                    bd.updateProducto(p);
+
+                    /*ProductoRetrofit clienteRest =
                             RestClient.getInstance()
                                     .getRetrofit()
                                     .create(ProductoRetrofit.class);
@@ -143,13 +156,16 @@ public class GestionProductoActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<Producto> call, Throwable t) {
                         }
-                    });
+                    });*/
                 }else{
                     flagActualizacion = false;
-                    ProductoRetrofit clienteRest =
-                        RestClient.getInstance()
-                                .getRetrofit()
-                                .create(ProductoRetrofit.class);
+
+
+
+                    bd.insertProducto(p);
+
+                    /*
+                    ProductoRetrofit clienteRest = RestClient.getInstance().getRetrofit().create(ProductoRetrofit.class);
                     Call<Producto> altaCall = clienteRest.crearProducto(p);
                     altaCall.enqueue(new Callback<Producto>() {
                     @Override
@@ -175,7 +191,14 @@ public class GestionProductoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Producto> call, Throwable t) {
                     }
-                });}
+                }
+
+
+                );
+                */
+
+
+                }
             }
         });
 

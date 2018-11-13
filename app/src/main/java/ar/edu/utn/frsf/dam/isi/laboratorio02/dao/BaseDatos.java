@@ -3,17 +3,25 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.dao;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import java.util.List;
+
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
+
 public class BaseDatos {
 
     private static BaseDatos _REPO= null;
     private CategoriaDAO categoriaDAO;
     private ProductoDAO productoDAO;
     private PedidoDAO pedidoDAO;
-    private RoomAbsDB database;
 
-    private  BaseDatos(Context ctx){
 
-        database = Room.databaseBuilder(ctx,RoomAbsDB.class, "database").fallbackToDestructiveMigration().build();
+    public BaseDatos(Context ctx){
+
+        RoomAbsDB database = Room.databaseBuilder(ctx,RoomAbsDB.class, "database")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
         categoriaDAO = database.categoriaDAO();
         productoDAO = database.productoDao();
         pedidoDAO = database.pedidoDao();
@@ -24,16 +32,22 @@ public class BaseDatos {
         return _REPO;
     }
 
-    public void DeleteAll(){
+ /*   public void DeleteAll(){
         this.database.clearAllTables();
+    }*/
+
+    public void insertCategoria(Categoria categoria) {categoriaDAO.insertCategoria(categoria);}
+
+    public void insertProducto(Producto producto) {productoDAO.insertProducto(producto);}
+
+    public void updateProducto(Producto producto) {productoDAO.updateProducto(producto);}
+
+    public List<Categoria> getCategoria() {
+        return categoriaDAO.getAll();
     }
 
-    public CategoriaDAO getCategoriaDAO() {
-        return categoriaDAO;
-    }
-
-    public ProductoDAO getProductoDAO() {
-        return productoDAO;
+    public List<Producto> getProductoDAO() {
+        return productoDAO.getAll();
     }
 
     public PedidoDAO getPedidoDAO() {

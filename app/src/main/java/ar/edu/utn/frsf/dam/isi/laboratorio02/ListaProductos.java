@@ -16,6 +16,11 @@ import android.app.Activity;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.BaseDatos;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
@@ -32,13 +37,13 @@ public class ListaProductos extends AppCompatActivity {
     private TextView tvCantidad;
     private Button aceptar;
     private Producto producto;
-
+    private BaseDatos bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-
+        bd = new BaseDatos(getApplicationContext());
         setContentView(R.layout.activity_lista_productos);
         spinner = findViewById(R.id.spinnerCategoria);
         edtCantidad = findViewById(R.id.edtCantidad);
@@ -46,7 +51,12 @@ public class ListaProductos extends AppCompatActivity {
         tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
         tvProducto = findViewById(R.id.productos);
-        adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, product.getLista());
+        adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, bd.getProductoDAO());
+        adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bd.getCategoria());
+        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterCategoria);
+
+
         this.aceptar.setOnClickListener(listenerBtnAceptar);
 
         if (this.getIntent().getStringExtra("requestCode").equals("2")) {
@@ -59,8 +69,18 @@ public class ListaProductos extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapterProductos.clear();
                 Categoria cat = (Categoria) adapterView.getItemAtPosition(i);
-                adapterProductos = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, product.buscarPorCategoria(cat));
+                List<Producto> lp = bd.getProductoDAO();
+
+                List<Producto> lista = new ArrayList<>();
+                for (Producto producto : lp){
+                    if(producto.getCategoria().getId() == cat.getId()){
+                        lista.add(producto);
+                    }
+                }
+
+                adapterProductos.addAll(lista);
                 listaProductos.setAdapter(adapterProductos);
             }
 
@@ -78,7 +98,8 @@ public class ListaProductos extends AppCompatActivity {
         });
 
 
-        Runnable r = new Runnable() {
+
+      /*  Runnable r = new Runnable() {
             @Override
             public void run() {
                 CategoriaRest catRest = new CategoriaRest();
@@ -118,8 +139,7 @@ public class ListaProductos extends AppCompatActivity {
         };
         Thread hiloCargarCombo = new Thread(r);
         hiloCargarCombo.start();
-
-
+*/
     }
 
     private View.OnClickListener listenerBtnAceptar = new View.OnClickListener() {

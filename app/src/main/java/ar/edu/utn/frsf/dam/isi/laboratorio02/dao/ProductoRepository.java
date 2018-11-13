@@ -18,6 +18,7 @@ public class ProductoRepository {
     private static List<Categoria> CATEGORIAS_PRODUCTOS = new ArrayList<>();
     private static boolean FLAG_INICIALIZADO = false;
 
+    /*
     private static void inicializar() {
         int id = 0;
         Random rand = new Random();
@@ -31,11 +32,12 @@ public class ProductoRepository {
             }
         }
         FLAG_INICIALIZADO = true;
-    }
+    }*/
 
+    /*
     public ProductoRepository() {
         if (!FLAG_INICIALIZADO) inicializar();
-    }
+    }*/
 
     public List<Producto> getLista() {
         return LISTA_PRODUCTOS;

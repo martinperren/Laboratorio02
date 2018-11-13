@@ -21,5 +21,5 @@ public interface PedidoDAO {
     @Update
     void updateCategoria(Pedido pedido);
     @Query("SELECT * FROM PEDIDO")
-    List<Categoria> getAll();
+    List<Pedido> getAll();
 }

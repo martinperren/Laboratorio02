@@ -10,14 +10,17 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.BaseDatos;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
-public class CategoriaActivity extends AppCompatActivity {
+public class CategoriaActivity extends AppCompatActivity{
 
     private EditText textoCat;
     private Button btnCrear;
     private Button btnMenu;
+    private BaseDatos bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class CategoriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categoria);
         textoCat = (EditText) findViewById(R.id.txtNombreCategoria);
         btnCrear = (Button) findViewById(R.id.btnCrearCategoria);
+        bd = new BaseDatos(getApplicationContext());
+
 
 
         btnCrear.setOnClickListener(new View.OnClickListener() {
@@ -36,8 +41,10 @@ public class CategoriaActivity extends AppCompatActivity {
                     public void run() {
                         Categoria categoria = new Categoria();
                         categoria.setNombre(textoCat.getText().toString());
-                        CategoriaRest catRest = new CategoriaRest();
-                        catRest.crearCategoria(categoria);
+
+                        //CategoriaRest catRest = new CategoriaRest();
+                        //catRest.crearCategoria(categoria);
+                        bd.insertCategoria(categoria);
                     }
                 };
                 Thread hiloSec = new Thread(r);
@@ -61,6 +68,8 @@ public class CategoriaActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
 }

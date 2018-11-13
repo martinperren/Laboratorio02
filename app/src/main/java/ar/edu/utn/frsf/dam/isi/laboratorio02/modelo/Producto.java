@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -15,6 +16,7 @@ public class Producto {
     @ColumnInfo(name = "ID_PRODUCTO")
     private Integer id;
     private String nombre;
+    @Embedded(prefix = "cat_")
     private Categoria categoria;
 
 

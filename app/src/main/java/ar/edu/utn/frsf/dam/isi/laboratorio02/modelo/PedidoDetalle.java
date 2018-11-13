@@ -14,10 +14,7 @@ import android.support.annotation.NonNull;
         childColumns = "PEDIDO_ID"))
 
 public class PedidoDetalle {
-
-
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "PEDIDO_ID")
     private Integer id;
     private Producto producto;
