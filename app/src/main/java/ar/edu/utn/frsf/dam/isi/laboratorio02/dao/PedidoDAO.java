@@ -11,15 +11,27 @@ import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalle;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 @Dao
 public interface PedidoDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCategoria(Pedido pedido);
+    void insertPedido(Pedido pedido);
     @Delete
-    void deleteCategoria(Pedido pedido);
+    void deletePedido(Pedido pedido);
     @Update
-    void updateCategoria(Pedido pedido);
-    @Query("SELECT * FROM PEDIDO")
+    void updatePedido(Pedido pedido);
+    @Query("SELECT * FROM Pedido")
     List<Pedido> getAll();
+    @Query("SELECT * FROM PEDIDO WHERE ID_PEDIDO = :id")
+    Pedido getPedidoById(String id);
+    @Query("SELECT * FROM PEDIDO")
+    List<PedidoConDetalle> getAllConDetalle();
+    @Query("SELECT * FROM PEDIDO WHERE ID_PEDIDO = :id")
+    List<PedidoConDetalle> getPedidoByIdConDetalle(String id);
+
+
+
+
 }

@@ -20,6 +20,8 @@ public interface ProductoDAO {
     void deleteProducto(Producto producto);
     @Update
     void updateProducto(Producto producto);
+    @Query("SELECT * FROM PRODUCTO WHERE ID_PRODUCTO = :id")
+    List<Producto> getProductoById(String id);
     @Query("SELECT * FROM PRODUCTO")
     List<Producto> getAll();
 }

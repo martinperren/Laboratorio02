@@ -6,6 +6,9 @@ import android.content.Context;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalle;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class BaseDatos {
@@ -14,6 +17,7 @@ public class BaseDatos {
     private CategoriaDAO categoriaDAO;
     private ProductoDAO productoDAO;
     private PedidoDAO pedidoDAO;
+    private PedidoDetalleDAO pedidoDetalleDAO;
 
 
     public BaseDatos(Context ctx){
@@ -25,6 +29,7 @@ public class BaseDatos {
         categoriaDAO = database.categoriaDAO();
         productoDAO = database.productoDao();
         pedidoDAO = database.pedidoDao();
+        pedidoDetalleDAO = database.pedidoDetalleDao();
     }
 
     public static  BaseDatos getInstance(Context ctx){
@@ -38,6 +43,8 @@ public class BaseDatos {
 
     public void insertCategoria(Categoria categoria) {categoriaDAO.insertCategoria(categoria);}
 
+    public void insertPedidoDetalle (PedidoDetalle pd) {pedidoDetalleDAO.insertPedidoDetalle(pd);}
+
     public void insertProducto(Producto producto) {productoDAO.insertProducto(producto);}
 
     public void updateProducto(Producto producto) {productoDAO.updateProducto(producto);}
@@ -46,9 +53,37 @@ public class BaseDatos {
         return categoriaDAO.getAll();
     }
 
-    public List<Producto> getProductoDAO() {
+    public List<Producto> getProducto() {
         return productoDAO.getAll();
     }
+
+    public List<Producto> getProductoById(String id) {
+        return productoDAO.getProductoById(id);
+    }
+
+    public PedidoDetalleDAO getPedidoDetalleDAO() {
+        return pedidoDetalleDAO;
+    }
+
+    public ProductoDAO getProductoDAO() {
+        return productoDAO;
+    }
+
+    public Pedido getPedidoById(String id) {
+        return pedidoDAO.getPedidoById(id);
+    }
+
+    public PedidoDetalle getPedidoDetalleById(String id) {
+        return pedidoDetalleDAO.getPedidoDetalleById(id);
+    }
+
+    public List<PedidoConDetalle> getPedidoByIdConDetalle (String id){
+        return pedidoDAO.getPedidoByIdConDetalle(id);
+    }
+
+
+
+
 
     public PedidoDAO getPedidoDAO() {
         return pedidoDAO;

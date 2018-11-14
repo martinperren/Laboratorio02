@@ -11,8 +11,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.BaseDatos;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalle;
 
 
 public class EstadoPedidoReceiver extends BroadcastReceiver {
@@ -22,16 +24,17 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
     public static final String ESTADO_CANCELADO = "ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_CANCELADO";
     public static final String ESTADO_EN_PREPARACION = "ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_EN_PREPARACION";
     public static final String ESTADO_LISTO = "ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_LISTO";
-
-    PedidoRepository repositoryPedido = new PedidoRepository();
+    private BaseDatos bd;
+    //PedidoRepository repositoryPedido = new PedidoRepository();
 
 
     public void onReceive(Context context, Intent intent) {
-
+        bd = new BaseDatos(context);
         if (intent.getAction().equals(ESTADO_LISTO)) {
             Bundle b = intent.getExtras();
             Integer idPedido = (Integer) b.get("idPedido");
-            Pedido p = repositoryPedido.buscarPorId(idPedido);
+            Pedido p = bd.getPedidoDAO().getPedidoById(idPedido.toString());
+
 
 
             Intent destino = new Intent(context, AltaPedidos.class);
@@ -58,7 +61,7 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ESTADO_EN_PREPARACION)) {
             Bundle b = intent.getExtras();
             Integer idPedido = (Integer) b.get("idPedido");
-            Pedido p = repositoryPedido.buscarPorId(idPedido);
+            Pedido p = bd.getPedidoDAO().getPedidoById(idPedido.toString());
 
 
             Intent destino = new Intent(context, AltaPedidos.class);
@@ -85,8 +88,12 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals(ESTADO_ACEPTADO)) {
             Bundle b = intent.getExtras();
-            Integer idPedido = (Integer) b.get("idPedido");
-            Pedido p = repositoryPedido.buscarPorId(idPedido);
+             String idPedido =  b.get("idPedido").toString();
+
+            PedidoConDetalle pd = bd.getPedidoByIdConDetalle(idPedido).get(0);
+            Pedido p = pd.getPedido();
+            p.setDetalle(pd.getDetalles());
+
 
             double total = 0;
             for (int i = 0; i < p.getDetalle().size(); i++) {

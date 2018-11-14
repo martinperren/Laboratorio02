@@ -31,7 +31,6 @@ public class Pedido {
     private List<PedidoDetalle> detalle;
     @TypeConverters(EstadoConverter.class)
     private Estado estado;
-
     private String direccionEnvio;
     private String mailContacto;
     private Boolean retirar;

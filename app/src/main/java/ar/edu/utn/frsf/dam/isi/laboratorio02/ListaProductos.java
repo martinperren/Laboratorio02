@@ -51,7 +51,7 @@ public class ListaProductos extends AppCompatActivity {
         tvCantidad = findViewById(R.id.tvCantidad);
         listaProductos = findViewById(R.id.listaProductos);
         tvProducto = findViewById(R.id.productos);
-        adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, bd.getProductoDAO());
+        adapterProductos = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, bd.getProducto());
         adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bd.getCategoria());
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
@@ -71,7 +71,7 @@ public class ListaProductos extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 adapterProductos.clear();
                 Categoria cat = (Categoria) adapterView.getItemAtPosition(i);
-                List<Producto> lp = bd.getProductoDAO();
+                List<Producto> lp = bd.getProducto();
 
                 List<Producto> lista = new ArrayList<>();
                 for (Producto producto : lp){

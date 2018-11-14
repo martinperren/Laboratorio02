@@ -17,23 +17,26 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.BaseDatos;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoHolder;
 
-public class PedidosAdapter extends ArrayAdapter<Pedido> {
+public class PedidosAdapter extends ArrayAdapter<PedidoConDetalle> {
     private Context mContext;
-    private List<Pedido> listaPedidos;
-    private PedidoRepository repositorioPedido = new PedidoRepository();
+    private List<PedidoConDetalle> listaPedidos;
+    private BaseDatos bd;
+    //private PedidoRepository repositorioPedido = new PedidoRepository();
 
 
 
 
 
 
-    public PedidosAdapter(Context context, List<Pedido> list) {
+    public PedidosAdapter(Context context, List<PedidoConDetalle> list) {
         super(context, 0, list);
-
+        bd = new BaseDatos(context);
         mContext = context;
         listaPedidos = list;
 
@@ -54,7 +57,7 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
             holder = new PedidoHolder(convertView);
             convertView.setTag(holder);
         }
-        Pedido pedido = super.getItem(position);
+        Pedido pedido = super.getItem(position).getPedido();
 
 
 
@@ -119,8 +122,8 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
             public void onClick(View view) {
 
                 Intent i = new Intent(mContext,AltaPedidos.class);
-                i.putExtra("idPedidoREQ",repositorioPedido.getLista().get(position).getId());
-                System.out.println("get id: "+repositorioPedido.getLista().get(position).getId());
+                i.putExtra("idPedidoREQ",bd.getPedidoDAO().getAll().get(position).getId());
+                System.out.println("get id: "+bd.getPedidoDAO().getAll().get(position).getId());
                 mContext.startActivity(i);
 
                 }
@@ -137,7 +140,7 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
             @Override
             public void onClick(View view) {
                 int indice =  position;
-                Pedido pedidoSeleccionado = listaPedidos.get(indice);
+                Pedido pedidoSeleccionado = listaPedidos.get(indice).getPedido();
                 if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
                         pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
                         pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){

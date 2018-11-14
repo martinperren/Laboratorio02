@@ -17,7 +17,9 @@ public class PedidoDetalle {
     @PrimaryKey
     @ColumnInfo(name = "PEDIDO_ID")
     private Integer id;
+    @Embedded(prefix = "pro_")
     private Producto producto;
+    @Embedded(prefix = "ped_")
     private Pedido pedido;
 
     private static int ID_DETALLE =1;

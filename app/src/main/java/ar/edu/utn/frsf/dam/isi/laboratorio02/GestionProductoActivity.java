@@ -1,5 +1,6 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ import retrofit2.Response;
 public class GestionProductoActivity extends AppCompatActivity {
     private Button btnMenu;
     private Button btnGuardar;
+    private Button btnVolver;
     private Spinner comboCategorias;
     private EditText nombreProducto;
     private EditText descProducto;
@@ -63,6 +65,7 @@ public class GestionProductoActivity extends AppCompatActivity {
                 findViewById(R.id.btnAbmProductoBuscar);
         btnBorrar = (Button)
                 findViewById(R.id.btnAbmProductoBorrar);
+        btnVolver = findViewById(R.id.btnAbmProductoVolver);
 
         adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bd.getCategoria());
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,26 +110,40 @@ public class GestionProductoActivity extends AppCompatActivity {
             }
         });
 
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(GestionProductoActivity.this, MainActivity.class);
+                startActivity(i);
+
+            }
+        });
+
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Producto p = new Producto();
-                p.setNombre(nombreProducto.getText().toString());
-
-                p.setCategoria(c);
-
-
-                p.setDescripcion(descProducto.getText().toString());
-
-                p.setPrecio(Double.parseDouble(precioProducto.getText().toString()));
                 if(opcionNuevoBusqueda.isChecked()){
                     flagActualizacion = true;
+                    p=bd.getProductoById(idProductoBuscar.getText().toString()).get(0);
+                    p.setNombre(nombreProducto.getText().toString());
 
+                    p.setCategoria(c);
+
+
+                    p.setDescripcion(descProducto.getText().toString());
+
+                    p.setPrecio(Double.parseDouble(precioProducto.getText().toString()));
 
 
                     bd.updateProducto(p);
+
+                    Toast toast1 =
+                            Toast.makeText(getApplicationContext(),
+                                    "Actualizado correctamente", Toast.LENGTH_SHORT);
+                    toast1.show();
 
                     /*ProductoRetrofit clienteRest =
                             RestClient.getInstance()
@@ -160,10 +177,22 @@ public class GestionProductoActivity extends AppCompatActivity {
                 }else{
                     flagActualizacion = false;
 
+                    p.setNombre(nombreProducto.getText().toString());
 
+                    p.setCategoria(c);
+
+
+                    p.setDescripcion(descProducto.getText().toString());
+
+                    p.setPrecio(Double.parseDouble(precioProducto.getText().toString()));
 
                     bd.insertProducto(p);
 
+
+                    Toast toast1 =
+                            Toast.makeText(getApplicationContext(),
+                                    "Creado correctamente", Toast.LENGTH_SHORT);
+                    toast1.show();
                     /*
                     ProductoRetrofit clienteRest = RestClient.getInstance().getRetrofit().create(ProductoRetrofit.class);
                     Call<Producto> altaCall = clienteRest.crearProducto(p);
@@ -206,7 +235,20 @@ public class GestionProductoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ProductoRetrofit clienteRest =
+
+
+                Producto p=bd.getProductoById(idProductoBuscar.getText().toString()).get(0);
+                nombreProducto.setText(p.getNombre());
+
+                comboCategorias.setSelection(adapterCategoria.getPosition(p.getCategoria()));
+
+                descProducto.setText(p.getDescripcion());
+
+                precioProducto.setText(p.getPrecio().toString());
+
+                idProductoAct = p.getId();
+
+               /* ProductoRetrofit clienteRest =
                         RestClient.getInstance()
                                 .getRetrofit()
                                 .create(ProductoRetrofit.class);
@@ -243,7 +285,7 @@ public class GestionProductoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Producto> call, Throwable t) {
                     }
-                });
+                });*/
             }
         });
 

@@ -7,12 +7,15 @@ import android.os.IBinder;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.BaseDatos;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 public class PrepararPedidoService extends IntentService {
 
-    private PedidoRepository pr = new PedidoRepository();
+    //private PedidoRepository pr = new PedidoRepository();
+    private BaseDatos bd;
+
 
     public PrepararPedidoService() {
         super("PrepararPedidoService");
@@ -20,10 +23,10 @@ public class PrepararPedidoService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
+        bd = new BaseDatos(getApplicationContext());
         try {
             Thread.sleep(2000);
-            List<Pedido> lista = pr.getLista();
+            List<Pedido> lista = bd.getPedidoDAO().getAll();
             for(Pedido p:lista) {
                 if (p.getEstado().equals(Pedido.Estado.ACEPTADO)) {
                     p.setEstado(Pedido.Estado.EN_PREPARACION);

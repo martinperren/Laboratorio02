@@ -9,20 +9,25 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 
 @Dao
     public interface PedidoDetalleDAO {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertCategoria(PedidoDetalle pedido);
+        void insertPedidoDetalle(PedidoDetalle pedido);
         @Delete
-        void deleteCategoria(PedidoDetalle pedido);
+        void deletePedidoDetalle(PedidoDetalle pedido);
         @Update
-        void updateCategoria(PedidoDetalle pedido);
+        void updatePedidoDetalle(PedidoDetalle pedido);
+        @Query("SELECT * FROM PEDIDODETALLE WHERE PEDIDO_ID = :id")
+        PedidoDetalle getPedidoDetalleById(String id);
         @Query("SELECT * FROM PEDIDODETALLE")
-        List<Categoria> getAll();
+        List<PedidoDetalle> getAll();
+
+
+
     }
 
 
